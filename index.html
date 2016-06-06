@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<title>Pete and Larry POS</title>
+<link type="text/css" href='inc/style.css' rel="Stylesheet" />
+<link href="css/redmond/jquery-ui-1.10.2.custom.css" rel="stylesheet">
+</head>
+<body>
+	<div id="page-wrap"></div>
+	<div id="price_ctnr">
+		<div id="price">
+ 			&nbsp;Total: $
+			<span id="total">0.00</span>
+		</div>
+	</div>
+	<div id="right">
+		<div id="btn_clear" onclick="clearAmount();">Clear</div>
+		<div id="btn_change" onclick="calcChange();">Change</div>
+		<div id="btn_running" onclick="list();">List</div>
+	</div>
+	<div id="dlg_change" title="Change"></div>
+	<div id="dlg_running" title="Reciept"><ul id="ul_running"></ul></div>
+
+	<script src="inc/jquery.js" type="text/javascript"></script>
+	<script src="inc/jquery-ui.js" type="text/javascript"></script>
+	<script type="text/javascript">
+		function jsonpCallback(json) {
+			$.each(json.products, function(i, item) {
+				var id = json.products[i].id;
+				var name = json.products[i].name;
+				var price = json.products[i].price;
+				var itemType = json.products[i].itemType;
+				var html = '<div data-price="'+price+'" data-name="'+name+'" class="items '+itemType+'" id="link_'+id+'" onclick="addAmount('+id+');"><div class="itemtext">'+name+'<br>$'+price+'</div></div>'
+
+				$('#page-wrap').append(html);
+			});
+		}
+		function addAmount(id) {
+			var amnt = $('#link_'+id).attr("data-price");
+			var currAmnt = $('#total').html() * 1;
+			var result = currAmnt + amnt*1;
+
+			var name = $('#link_'+id).attr("data-name");
+
+			$('#ul_running').append('<li>'+name+'</li>');
+			$('#total').html(result.toFixed(2));
+		}
+		function clearAmount(){
+			var result = 0;
+			$('#total').html(result.toFixed(2));
+			$('#dlg_running').html('<ul id="ul_running"></ul>');
+		}
+		function calcChange() {
+			var total = $('#total').html() * 1;
+			var c100 = 100 - total;
+			var c80 = 80 - total;
+			var c60 = 60 - total;
+			var c50 = 50 - total;
+			var c40 = 40 - total;
+			var c20 = 20 - total;
+			var c10 = 10 - total;
+			var c5 = 5 - total;
+
+			$( "#dlg_change" ).html("<h2><b>Total:</b> "+total.toFixed(2)+"</h2><br/>");
+			if(c100>0) { $( "#dlg_change" ).append("<b>Change For 100: </b> $"+c100.toFixed(2)+"<br/>"); }
+			if(c80>0) { $( "#dlg_change" ).append("<b>Change For 80: </b> $"+c80.toFixed(2)+"<br/>"); }
+			if(c60>0) { $( "#dlg_change" ).append("<b>Change For 60: </b> $"+c60.toFixed(2)+"<br/>"); }
+			if(c50>0) { $( "#dlg_change" ).append("<b>Change For 50: </b> $"+c50.toFixed(2)+"<br/>"); }
+			if(c40>0) { $( "#dlg_change" ).append("<b>Change For 40: </b> $"+c40.toFixed(2)+"<br/>"); }
+			if(c20>0) { $( "#dlg_change" ).append("<b>Change For 20: </b> $"+c20.toFixed(2)+"<br/>"); }
+			if(c10>0) { $( "#dlg_change" ).append("<b>Change For 10: </b> $"+c10.toFixed(2)+"<br/>"); }
+			if(c5>0) { $( "#dlg_change" ).append("<b>Change For 5: </b> $"+c5.toFixed(2)+"<br/>"); }
+
+			$( "#dlg_change" ).dialog("open")
+		}
+		function list() {
+			$( "#dlg_running" ).dialog("open");
+		}
+		$(function() { 
+				$( "#dlg_change" ).dialog({ minWidth: 600 , autoOpen: false, modal: true, hide: 'puff', 
+					buttons: { 
+						Ok: function() { $( this ).dialog( "close" ); },
+						Clear: function() { clearAmount(); $( this ).dialog( "close" ); }
+					} 
+				});
+				$( "#dlg_running" ).dialog({ minWidth: 600 , autoOpen: false, modal: true, hide: 'puff',
+					buttons: { 
+						Ok: function() { $( this ).dialog( "close" ); },
+						Clear: function() { clearAmount(); $( this ).dialog( "close" ); }
+					}
+				});
+		});
+	</script>
+	<script src="products.js" type="text/javascript"></script>
+</body>
+</html>
