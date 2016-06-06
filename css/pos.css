@@ -1,0 +1,61 @@
+body {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	-ms-touch-action: manipulation !important;
+}	
+
+.draft {
+    background-color:#1BA1E2;
+    background-image:url('../imgs/draft.png');
+}
+.bottle {
+    background-color:#00ABA9;
+    background-image:url('../imgs/bottle.png');
+}
+.food {
+    background-color:#A200FF;
+    background-image:url('../imgs/food.png');
+}
+.na {
+    background-color:#E771BD;
+    background-image:url('../imgs/na.png');
+}
+.btn_clear {
+    background-color:#E51400;
+    background-image:url('../imgs/new.png');
+    background-repeat:no-repeat;
+    width:128px;
+    height:128px;
+
+}
+.items {
+    color:#FFF;
+    width:128px;
+    height:128px;
+    margin:8px;
+    cursor:pointer;
+    background-repeat:no-repeat;
+    position:relative;
+}
+td,th {
+    padding: 6px;
+    text-align: left;
+    font-size:20px;
+}
+
+.jumbotron h1 {
+    font-size:54px;
+}
+
+.itemprice {
+    font-size:10px;
+    float:right;
+}
+
+.itemqty {
+    font-weight:bold;
+}
