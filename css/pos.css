@@ -24,14 +24,6 @@ body {
     background-color:#E771BD;
     background-image:url('../imgs/na.png');
 }
-.btn_clear {
-    background-color:#E51400;
-    background-image:url('../imgs/new.png');
-    background-repeat:no-repeat;
-    width:128px;
-    height:128px;
-
-}
 .items {
     color:#FFF;
     width:128px;
@@ -59,3 +51,4 @@ td,th {
 .itemqty {
     font-weight:bold;
 }
+

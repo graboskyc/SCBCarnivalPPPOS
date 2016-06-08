@@ -33,17 +33,19 @@
           </button>
           <a class="navbar-brand sitename" href="#"></a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
+        <div id="navbar" >
           <form class="navbar-form navbar-right">
             <button class="btn btn-success defaultable " id="btn_total" data-default="Total: $"></button>
-            <button class="btn btn-warning defaultable userinputdefaultable" id="btn_tendered" data-default="Tendered: $"></button>
-            <button class="btn btn-info defaultable userinputdefaultable" id="btn_change" data-default="Change: $"></button>
+            <button class="btn btn-warning defaultable userinputdefaultable hidden-xs" id="btn_tendered" data-default="Tendered: $"></button>
+            <button class="btn btn-info defaultable userinputdefaultable hidden-xs" id="btn_change" data-default="Change: $"></button>
             <button class="btn btn-danger" id="btn_Clear" onclick="clearAmount();return false;">Clear</button>
           </form>
         </div><!--/.navbar-collapse -->
       </div>
       
     </nav><!-- /.navbar -->
+    
+    <div class="visible-xs-block"><p style="height:60px;">&nbsp;</p></div>
 
     <div class="container">
       <div class="row row-offcanvas row-offcanvas-right">
