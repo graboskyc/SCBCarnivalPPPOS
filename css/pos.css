@@ -24,6 +24,10 @@ body {
     background-color:#E771BD;
     background-image:url('../imgs/na.png');
 }
+.util {
+    background-color:#a05000;
+    background-image:url('../imgs/util.png');
+}
 .items {
     color:#FFF;
     width:128px;

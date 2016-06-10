@@ -19,7 +19,8 @@ jsonpCallback({"products":[
 	{"id":18,"name":"Wine","price":"4.00","itemType":"bottle"},
 	{"id":19,"name":"Coors NA","price":"2.50","itemType":"na"},
 	{"id":20,"name":"Root Beer","price":"1.50","itemType":"na"},
-	{"id":21,"name":"Water","price":"1.50","itemType":"na"}
+	{"id":21,"name":"Water","price":"1.50","itemType":"na"},
+	{"id":22,"name":"Ice","price":"7.00","itemType":"util"}
 	],
     "sitename":"Pete and Larry's Place"});
 
