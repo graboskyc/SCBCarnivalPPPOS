@@ -63,4 +63,5 @@ td,th {
   .itemholder { width:100%;}
   .receiptrow {width:100%;}
   li { width:100%;}
+  .col-xs-7, .col-sm-4, .sidebar-offcanvas {width:100%;}
 }
