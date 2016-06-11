@@ -92,17 +92,17 @@
         <p class="sitename"></p>
       </footer>
 
-        <div class="visible-print" style="position:absolute;bottom:80px;width:100%;text-align:center;">
+        <div class="visible-print" style="position:absolute;bottom:60px;width:100%;text-align:center;">
                 <center>
                     <span id="eventname" style="font-weight:bold;"></span>
                     <br><span id="website" style="font-weight:bold;"></span>
                     <br><span id="dt"></span>
-                    <br><div id="bc" style="padding:10px;"></div>
-                    <br><img src="" id="logo" width="100" />
+                    <br><div id="bc"></div>
+                    <br><img src="" id="logo" height="50" />
                 </center>
         </div>
         
-        <div class="visible-print" style="position:absolute;bottom:20px;width:100%;text-align:center;">
+        <div class="visible-print" style="position:absolute;bottom:10px;width:100%;text-align:center;">
             <p>Recieved By: __________________________________</p>
         </div>
 
@@ -230,14 +230,20 @@
         
         function genBarCode() {
             var o = {};
-            o.Purchased = purchased;
-            o.Tendered = tendered;
-            o.Total = total;
-            o.Change = change;
-            o.Dt = $('#dt').html();
+            
+            var l = jQuery.extend(true, {}, purchased);
+            $.each(l, function(i, item) {
+                delete item.amt;
+                delete item.name;
+            });
+            o.P = l;
+            console.log(l);
+            o.Te = tendered;
+            o.To = total;
+            o.C = change;
+            o.D = $('#dt').html();
             var encrypted = CryptoJS.AES.encrypt(JSON.stringify(o), "B33p"); 
-            PDF417.init(encrypted);
-            console.log(encrypted.toString());             
+            PDF417.init(encrypted);      
             var barcode = PDF417.getBarcodeArray();
             // block sizes (width and height) in pixels
             var bw = 2;
