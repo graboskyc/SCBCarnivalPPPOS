@@ -39,6 +39,7 @@
             <button class="btn btn-warning defaultable userinputdefaultable hidden-xs vis-print" id="btn_tendered" data-default="Tendered: $"></button>
             <button class="btn btn-info defaultable userinputdefaultable hidden-xs vis-print" id="btn_change" data-default="Change: $"></button>
             <button class="btn btn-danger hidden-print" id="btn_Clear" onclick="clearAmount();return false;">Clear</button>
+            <button class="btn btn-default hidden-print" id="btn_Print" onclick="printRecpt();return false;">Print</button>
           </form>
         </div><!--/.navbar-collapse -->
       </div>
@@ -96,6 +97,7 @@
                     <span id="eventname" style="font-weight:bold;"></span>
                     <br><span id="website" style="font-weight:bold;"></span>
                     <br><span id="dt"></span>
+                    <br><div id="bc" style="padding:10px;"></div>
                     <br><img src="" id="logo" width="100" />
                 </center>
         </div>
@@ -116,9 +118,15 @@
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="js/ie10-viewport-bug-workaround.js"></script>
     
+    <script src="js/bcmath-min.js"></script>
+    <script src="js/pdf417-min.js"></script>
+    <script src="js/aes.js"></script>
+    
     <script type="text/javascript">
         var purchased = [];
         var total = 0;
+        var change = 0;
+        var tendered = 0;
         
 		function jsonpCallback(json) {   
 			$.each(json.products, function(i, item) {
@@ -193,17 +201,22 @@
             
             $('#telNumber').val('');
             
-            $('#dt').html($.format.date(new Date().getTime(), "MM/dd/yyyy HH:mm"));
-            
+            setTime();
+            $('#bc').html(" ");
+                 
             return false;
 		}
         
+        function setTime() {
+            $('#dt').html($.format.date(new Date().getTime(), "MM/dd/yyyy HH:mm"));
+        }
+        
         function calcChange() {
             if($('#telNumber').val() != '') {
-                var tendered = $('#telNumber').val() * 1;
+                tendered = $('#telNumber').val() * 1;
                 $('#tendered').html(tendered.toFixed(2));
                 
-                var change = ((tendered*1) - (total*1));
+                change = ((tendered*1) - (total*1));
                 
                 $('#btn_change').html('Change: $'+change.toFixed(2));
                 $('#btn_tendered').html('Tendered: $'+tendered.toFixed(2));
@@ -213,6 +226,50 @@
                     $(this).html($(this).data('default'));
                 });
             }
+        }
+        
+        function genBarCode() {
+            var o = {};
+            o.Purchased = purchased;
+            o.Tendered = tendered;
+            o.Total = total;
+            o.Change = change;
+            o.Dt = $('#dt').html();
+            var encrypted = CryptoJS.AES.encrypt(JSON.stringify(o), "B33p"); 
+            PDF417.init(encrypted);
+            console.log(encrypted.toString());             
+            var barcode = PDF417.getBarcodeArray();
+            // block sizes (width and height) in pixels
+            var bw = 2;
+            var bh = 2;
+            // create canvas element based on number of columns and rows in barcode
+            var container = document.getElementById('bc');
+            var canvas = document.createElement('canvas');
+            canvas.width = bw * barcode['num_cols'];
+            canvas.height = bh * barcode['num_rows'];
+            container.appendChild(canvas);
+            var ctx = canvas.getContext('2d');                    
+            // graph barcode elements
+            var y = 0;
+            // for each row
+            for (var r = 0; r < barcode['num_rows']; ++r) {
+                var x = 0;
+                // for each column
+                for (var c = 0; c < barcode['num_cols']; ++c) {
+                    if (barcode['bcode'][r][c] == 1) {                        
+                        ctx.fillRect(x, y, bw, bh);
+                    }
+                    x += bw;
+                }
+                y += bh;
+            }       
+        }
+        
+        function printRecpt() {
+            setTime();
+            $('#bc').html(" ");
+            genBarCode();
+            window.print();
         }
         
         $(document).ready(function () {
