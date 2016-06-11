@@ -56,3 +56,11 @@ td,th {
     font-weight:bold;
 }
 
+@media print {
+  .vis-print  { display: block !important; }
+  .btn { width: 100%; padding:5px; }
+  #purchasedItems, #purchasedItemsDiv { width: 100%; padding:5px; margin-top:5px; }
+  .itemholder { width:100%;}
+  .receiptrow {width:100%;}
+  li { width:100%;}
+}

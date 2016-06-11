@@ -22,5 +22,9 @@ jsonpCallback({"products":[
 	{"id":21,"name":"Water","price":"1.50","itemType":"na"},
 	{"id":22,"name":"Ice","price":"7.00","itemType":"util"}
 	],
-    "sitename":"Pete and Larry's Place"});
+    "sitename":"Pete and Larry's Place",
+    "eventname":"St. Charles Carnival",
+    "website":"www.scbcarnival.com",
+    "logo":"logo.png"
+    });
 
