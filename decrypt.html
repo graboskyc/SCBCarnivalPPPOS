@@ -1,0 +1,87 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"> 
+
+    <title></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/pos.css" rel="stylesheet">
+  </head>
+
+  <body>
+      
+      <nav class="navbar navbar-inverse navbar-fixed-top vis-print">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed hidden-print" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand sitename vis-print" href="#"></a>
+        </div>
+        <div id="navbar">
+
+        </div><!--/.navbar-collapse -->
+      </div>
+      
+    </nav><!-- /.navbar -->
+    
+    <div><p style="height:100px;">&nbsp;</p></div>
+
+    <div class="container">
+      <div class="row">
+          
+
+        <div class="col-xs-4"><textarea id="crypt" hei></textarea></div>
+        <div class="col-xs-4"><button class="btn btn-success" onclick="decr();">Decrypt</button></div>
+        <div class="col-xs-4"><textarea id="plain"></textarea></div>
+        
+            
+          
+      </div><!--/row-->
+      
+
+
+    </div><!--/.container-->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery-dateFormat.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+    
+    <script src="js/bcmath-min.js"></script>
+    <script src="js/pdf417-min.js"></script>
+    <script src="js/aes.js"></script>
+    
+    <script type="text/javascript">
+       
+        function decr() {
+            var enc = $('#crypt').val();
+            console.log(enc);
+            var pt = CryptoJS.AES.decrypt(enc, "B33p");
+            console.log(pt.toString());
+            $('#plain').val(pt.toString(CryptoJS.enc.Utf8)); 
+
+        }
+        
+		
+	</script>
+  </body>
+</html>
