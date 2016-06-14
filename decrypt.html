@@ -44,9 +44,9 @@
       <div class="row">
           
 
-        <div class="col-xs-4"><textarea id="crypt" hei></textarea></div>
-        <div class="col-xs-4"><button class="btn btn-success" onclick="decr();">Decrypt</button></div>
-        <div class="col-xs-4"><textarea id="plain"></textarea></div>
+        <div class="col-xs-5"><textarea id="crypt" style="width:100%;height:500px;"></textarea></div>
+        <div class="col-xs-2" style="text-align:center;"><button class="btn btn-success" onclick="decr();">Decrypt</button></div>
+        <div class="col-xs-5"><textarea id="plain" style="width:100%;height:500px;"></textarea></div>
         
             
           
@@ -81,7 +81,16 @@
 
         }
         
-		
+        function jsonpCallback(json) {   
+            $(".sitename").html(json.sitename);
+            $("title").html(json.sitename);
+            $('#eventname').html(json.eventname);
+            $('#website').html(json.website);
+            $('#logo').attr('src','imgs/'+json.logo);
+		}
+
 	</script>
+    
+    <script src="products.js" type="text/javascript"></script>
   </body>
 </html>

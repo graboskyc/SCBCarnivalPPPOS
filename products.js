@@ -20,7 +20,7 @@ jsonpCallback({"products":[
 	{"id":19,"name":"Coors NA","price":"2.50","itemType":"na"},
 	{"id":20,"name":"Root Beer","price":"1.50","itemType":"na"},
 	{"id":21,"name":"Water","price":"1.50","itemType":"na"},
-	{"id":22,"name":"Ice","price":"7.00","itemType":"util"}
+	{"id":22,"name":"Ice","price":"6.00","itemType":"util"}
 	],
     "sitename":"Pete and Larry's Place",
     "eventname":"St. Charles Carnival",
