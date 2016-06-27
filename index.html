@@ -96,6 +96,7 @@
                 <center>
                     <span id="eventname" style="font-weight:bold;"></span>
                     <br><span id="website" style="font-weight:bold;"></span>
+                    <br><span id="eventdate" style="font-weight:bold;"></span>
                     <br><span id="dt"></span>
                     <br><div id="bc"></div>
                     <br><img src="" id="logo" height="50" />
@@ -143,6 +144,7 @@
             $("title").html(json.sitename);
             $('#eventname').html(json.eventname);
             $('#website').html(json.website);
+            $('#eventdate').html(json.eventdate);
             $('#logo').attr('src','imgs/'+json.logo);
 	
 		}
