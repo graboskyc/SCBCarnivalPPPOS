@@ -70,7 +70,7 @@
                             <div class="span4"><div class="num"><div class="txt">1</div></div></div>
                             <div class="span4"><div class="num"><div class="txt">2</div></div></div>
                             <div class="span4"><div class="num"><div class="txt">3</div></div></div>
-                            <div class="span4"><div class="num" style="background-color:#E51400;"><div class="txt">c</div></div></div>
+                            <div class="span4"><div class="num" style="background-color:#d9534f;"><div class="txt">c</div></div></div>
                             <div class="span4"><div class="num"><div class="txt">0</div></div></div>
                             <div class="span4"></div>
                         </div>
@@ -135,7 +135,7 @@
 				var name = json.products[i].name;
 				var price = json.products[i].price;
 				var itemType = json.products[i].itemType;
-                var html = '<div id="div_'+id+'" class="col-xs-6 col-lg-4 items '+itemType+'" data-price="'+price+'" data-name="'+name+'" onclick="addAmount('+id+');"><h2>'+name+'</h2><p>'+price+'</p></div>'
+                var html = '<div id="div_'+id+'" class="col-xs-6 col-lg-4 items '+itemType+'" data-price="'+price+'" data-name="'+name+'" onclick="addAmount('+id+');"><h2>'+name+'</h2><p class="squareprice">'+price+'</p></div>'
 				
 				$('#inventory').append(html);
 			});
