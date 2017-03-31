@@ -17,6 +17,9 @@ It is built on bootstrap and jquery so should be compatible with the same browse
 
 When printing a receipt, a bar code is created at the bottom using an encrypted string from the products, prices, tendered, etc in PDF417 format. After printing, you can scan it with an app on your phone such as [this Android app](https://play.google.com/store/apps/details?id=mobi.pdf417). Once scanned, copy that string and paste it into the first box on the decrypt.html page. Pressing the green button will decrypt the text. Pressing the orange button does that and then correlates that data with the actual product page.
 
+# Try it:
+[http://graboskyc.github.io/SCBCarnivalPPPOS/](http://graboskyc.github.io/SCBCarnivalPPPOS/)
+
 # Screenshots
 ![](SS/ss1.png)
 
