@@ -1,11 +1,7 @@
-# SCBCarnivalPPPOS
-Simple Point of Sale (POS) system for the Pete's Place bar at the SCB Carnival.
+# SCBCarnivalPPPOS - SCB Carnival Pete's Place POS
+A very basic Point of Sale (POS) system for the Pete and Larry's Place bar and grill at the [SCB Carnival](http://scbcarnival.com).
 
 All menu items are listed in the products.js and then it builds the dynamic touch screen system. It will keep a running receipt of what is being ordered, the cost, and calculate the change. 
-
-Very basic.
-
-Built on BootStrap
 
 # Modifying 
 Simply edit the products.js. Create a list of objects as shown in the sample. The ID must be unique for receipt purposes.
@@ -27,3 +23,5 @@ When printing a receipt, a bar code is created at the bottom using an encrypted 
 ![](SS/ss2.png)
 
 ![](SS/ss3.png)
+
+![](SS/ss4.png)
