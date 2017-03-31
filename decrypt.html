@@ -79,11 +79,12 @@
     <script type="text/javascript">
 
       var g_json = "";
+      var g_encKey = "";
 
       function getPT() {
             var enc = $('#crypt').val();
             console.log(enc);
-            var pt = CryptoJS.AES.decrypt(enc, "B33p");
+            var pt = CryptoJS.AES.decrypt(enc, g_encKey);
             console.log(pt.toString(CryptoJS.enc.Utf8));
             return pt.toString(CryptoJS.enc.Utf8);
       }
@@ -116,6 +117,7 @@
         
         function jsonpCallback(json) {   
             g_json = json;
+            g_encKey = g_json.encKey;
             $(".sitename").html(json.sitename);
             $("title").html(json.sitename);
             $('#eventname').html(json.eventname);

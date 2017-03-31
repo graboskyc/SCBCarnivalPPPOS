@@ -129,9 +129,11 @@
         var change = 0;
         var tendered = 0;
         var menuYear = 0;
+        var encKey = "";
         
 		function jsonpCallback(json) {   
             menuYear = json.menuyear;
+            encKey = json.encKey;
 			$.each(json.products, function(i, item) {
                 var years = json.products[i].years;
                 if(years.indexOf(menuYear) != -1){
@@ -250,7 +252,7 @@
             o.C = change;
             o.Y = menuYear;
             o.D = $('#dt').html();
-            var encrypted = CryptoJS.AES.encrypt(JSON.stringify(o), "B33p"); 
+            var encrypted = CryptoJS.AES.encrypt(JSON.stringify(o), encKey); 
             console.log(encrypted.toString());
             PDF417.init(encrypted);      
             var barcode = PDF417.getBarcodeArray();

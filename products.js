@@ -29,6 +29,7 @@ jsonpCallback({"products":[
 	{"id":17,"name":"Smmr Shandy","price":"4.00","itemType":"bottle", "years":[2016]},
 	],
 	// universal settings for app
+	"encKey":"B33p",
     "sitename":"Pete and Larry's Place",
     "eventname":"St. Charles Carnival",
     "website":"www.scbcarnival.com",
