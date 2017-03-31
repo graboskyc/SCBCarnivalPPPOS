@@ -251,6 +251,7 @@
             o.Y = menuYear;
             o.D = $('#dt').html();
             var encrypted = CryptoJS.AES.encrypt(JSON.stringify(o), "B33p"); 
+            console.log(encrypted.toString());
             PDF417.init(encrypted);      
             var barcode = PDF417.getBarcodeArray();
             // block sizes (width and height) in pixels

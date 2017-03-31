@@ -48,7 +48,10 @@
           
 
         <div class="col-xs-5"><textarea id="crypt" style="width:100%;height:300px;"></textarea></div>
-        <div class="col-xs-2" style="text-align:center;"><button class="btn btn-success widebtn" onclick="decr();"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button></div>
+        <div class="col-xs-2" style="text-align:center;">
+          <button class="btn btn-success widebtn" onclick="decr();"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
+          <button class="btn btn-warning widebtn" onclick="itemize();"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></button>
+        </div>
         <div class="col-xs-5"><textarea id="plain" style="width:100%;height:300px;"></textarea></div>
         
             
@@ -74,17 +77,45 @@
     <script src="js/aes.js"></script>
     
     <script type="text/javascript">
-       
-        function decr() {
+
+      var g_json = "";
+
+      function getPT() {
             var enc = $('#crypt').val();
             console.log(enc);
             var pt = CryptoJS.AES.decrypt(enc, "B33p");
-            console.log(pt.toString());
-            $('#plain').val(pt.toString(CryptoJS.enc.Utf8)); 
+            console.log(pt.toString(CryptoJS.enc.Utf8));
+            return pt.toString(CryptoJS.enc.Utf8);
+      }
+       
+        function decr() {
+            var pt = getPT();
+            $('#plain').val(pt); 
+        }
 
+        function itemize() {
+            var pt = getPT();
+            var j = JSON.parse(pt);
+
+            $('#plain').val("");
+            var retStr = ""; 
+
+            var l = jQuery.extend(true, {}, j.P);
+            $.each(l, function(i, item) {
+                var inventoryItem = $.grep(g_json.products, function(e){ return e.id == item.id; });
+                var ii = inventoryItem[0];
+                retStr = retStr + ii.name + " @ $" + ii.price + " x" + item.qty + "\n"; 
+            });
+
+            retStr = retStr + "\nTOTAL: " + j.To + "\n" + "TENDERED:" + j.Te + "\n" + "ON:" + j.D; 
+
+            $('#plain').val(retStr);
+            
+           
         }
         
         function jsonpCallback(json) {   
+            g_json = json;
             $(".sitename").html(json.sitename);
             $("title").html(json.sitename);
             $('#eventname').html(json.eventname);
