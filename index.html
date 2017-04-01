@@ -230,8 +230,8 @@
                 });
             }
         }
-        
-        function genBarCode() {
+
+        function getEncStr() {
             var o = {};
             
             var l = jQuery.extend(true, {}, purchased);
@@ -248,6 +248,11 @@
             o.D = $('#dt').html();
             var encrypted = CryptoJS.AES.encrypt(JSON.stringify(o), encKey); 
             console.log(encrypted.toString());
+            return encrypted.toString();
+        }
+        
+        function genBarCode(encrypted) {
+            
             PDF417.init(encrypted);      
             var barcode = PDF417.getBarcodeArray();
             // block sizes (width and height) in pixels
@@ -275,11 +280,26 @@
                 y += bh;
             }       
         }
+
+        function writeRecptStorage(encStr) {
+            if (typeof(Storage) !== "undefined") {
+                if(localStorage.recptArr) {
+                    var ra = JSON.parse(localStorage.recptArr);
+                    ra.push(encStr);
+                    localStorage.recptArr = JSON.stringify(ra);
+                }
+                else {
+                    localStorage.recptArr = JSON.stringify([encStr]);
+                }
+            }
+        }
         
         function printRecpt() {
             setTime();
             $('#bc').html(" ");
-            genBarCode();
+            var encrypted = getEncStr();
+            genBarCode(encrypted);
+            writeRecptStorage(encrypted);
             window.print();
         }
         

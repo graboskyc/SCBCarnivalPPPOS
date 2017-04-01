@@ -45,6 +45,12 @@
           <button class="btn btn-success widebtn" onclick="decr();"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
           <br><br>
           <button class="btn btn-warning widebtn" onclick="itemize();"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></button>
+          <br><br>
+          <button class="btn btn-primary widebtn" onclick="recallRecpts();"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span></button>
+          <br><br>
+          <button class="btn btn-info widebtn" onclick="backupRecpts();"><span class="glyphicon glyphicon-barcode" aria-hidden="true"></span></button>
+          <br><br>
+          <button class="btn btn-danger widebtn" onclick="clearRecpts();"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
         </div>
         <div class="col-xs-6"><textarea id="plain" style="width:100%;height:300px;"></textarea></div>
       </div><!--/row-->
@@ -99,9 +105,33 @@
 
             retStr = retStr + "\nTOTAL: " + j.To + "\n" + "TENDERED:" + j.Te + "\n" + "ON:" + j.D; 
 
-            $('#plain').val(retStr);
-            
-           
+            $('#plain').val(retStr);           
+        }
+
+        function recallRecpts() {
+          if (typeof(Storage) !== "undefined") {
+              if(localStorage.recptArr) {
+                  var retStr = "";
+                  var ra = JSON.parse(localStorage.recptArr);
+                  $.each(ra, function(i, item) {
+                    retStr = retStr + item + "\n\n"; 
+                });
+
+                $('#plain').val(retStr);
+              }
+          }
+        }
+
+        function clearRecpts() {
+          var r = confirm("Clear all recpts?");
+            if (r == true) {
+                localStorage.clear();
+                alert("Local storage cleared");
+            }
+        }
+
+        function backupRecpts() {
+          $('#plain').val(localStorage.recptArr);
         }
         
         function jsonpCallback(json) {   
@@ -112,7 +142,7 @@
             $('#eventname').html(json.eventname);
             $('#website').html(json.website);
             $('#logo').attr('src','imgs/'+json.logo);
-		}
+		    }
 
 	</script>
     
