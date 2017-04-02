@@ -25,14 +25,13 @@
       <nav class="navbar navbar-inverse navbar-fixed-top vis-print">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand sitename vis-print" href="decrypt.html"></a>
+          <a class="navbar-brand sitename vis-print" href="#" onclick="window.location='decrypt.html';"></a>
         </div>
         <div id="navbar">
           <form class="navbar-form navbar-right">
             <button class="btn btn-success defaultable vis-print " id="btn_total" data-default="Total: $"></button>
             <button class="btn btn-warning defaultable userinputdefaultable hidden-xs vis-print" id="btn_tendered" data-default="Tendered: $"></button>
             <button class="btn btn-info defaultable userinputdefaultable hidden-xs vis-print" id="btn_change" data-default="Change: $"></button>
-            <button class="btn btn-danger hidden-print" id="btn_Clear" onclick="clearAmount();return false;">Clear</button>
             <button class="btn btn-default hidden-print" id="btn_Print" onclick="printRecpt();return false;">Print</button>
           </form>
         </div><!--/.navbar-collapse -->
@@ -64,9 +63,9 @@
                             <div class="span4"><div class="num"><div class="txt">1</div></div></div>
                             <div class="span4"><div class="num"><div class="txt">2</div></div></div>
                             <div class="span4"><div class="num"><div class="txt">3</div></div></div>
-                            <div class="span4"><div class="num" style="background-color:#d9534f;"><div class="txt">c</div></div></div>
+                            <div class="span4"><div class="num" data-special="clear" style="background-color:#d9534f;"><div class="txt"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></div></div></div>
                             <div class="span4"><div class="num"><div class="txt">0</div></div></div>
-                            <div class="span4"></div>
+                            <div class="span4"><div class="num" data-special="credit"><div class="txt"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span></div></div></div>
                         </div>
                 </div>
             </div>
@@ -216,7 +215,14 @@
         }
         
         function calcChange() {
-            if($('#telNumber').val() != '') {
+            if($('#telNumber').val() == "credit") {
+                $('#btn_change').html('Change: $0.00');
+                $('#btn_tendered').html('Tendered: Credit');
+
+                tendered = "Credit";
+                change = 0;
+            }
+            else if($('#telNumber').val() != '') {
                 tendered = $('#telNumber').val() * 1;
                 $('#tendered').html(tendered.toFixed(2));
                 
@@ -319,16 +325,25 @@
             $('.num').click(function () {
                 var num = $(this);
                 var text = $.trim(num.find('.txt').clone().children().remove().end().text());
-                
-                if(text == "c") {
-                    $('#telNumber').val('');
+
+                if(num.attr("data-special") == "clear") {
+                    clearAmount();
+                }
+                else if(num.attr("data-special") == "credit") {
+                    $('#telNumber').val('credit');
+                    calcChange();
                 }
                 else {
                     var telNumber = $('#telNumber');
-                    $(telNumber).val(telNumber.val() + text);
+                    if($(telNumber).val().indexOf('credit') !== -1) {
+                        $(telNumber).val(text);
+                    }
+                    else {
+                        $(telNumber).val(telNumber.val() + text);
+                    }
+                    calcChange();
                 }
-                
-                calcChange();
+
             });
             
             clearAmount();
@@ -336,12 +351,11 @@
             if (typeof(Storage) !== "undefined") {
                 if(!localStorage.recptCount) {
                     localStorage.recptCount = "1001";
-
-                    new Fingerprint2().get(function(result, components){
-                        localStorage.fp = result;
-                    });
                 }
-                console.log("Using recpt. ID: " + localStorage.recptCount + " and fingerprint: " + localStorage.fp);
+                new Fingerprint2().get(function(result, components){
+                        localStorage.fp = result;
+                        console.log("Using recpt. ID: " + localStorage.recptCount + " and fingerprint: " + localStorage.fp);
+                });
             }
 
             $(document).keyup(function(e) {
