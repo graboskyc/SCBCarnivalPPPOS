@@ -44,13 +44,15 @@
         <div class="col-xs-2" style="text-align:center;">
           <button class="btn btn-success widebtn" onclick="decr();"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
           <br><br>
-          <button class="btn btn-warning widebtn" onclick="itemize();"><span class="glyphicon glyphicon-list" aria-hidden="true"></span></button>
+          <button class="btn btn-warning widebtn" onclick="itemize();"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></button>
           <br><br>
           <button class="btn btn-primary widebtn" onclick="recallRecpts();"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span></button>
           <br><br>
           <button class="btn btn-info widebtn" onclick="backupRecpts();"><span class="glyphicon glyphicon-barcode" aria-hidden="true"></span></button>
           <br><br>
           <button class="btn btn-danger widebtn" onclick="clearRecpts();"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+          <br><br>
+          <button class="btn btn-default widebtn" onclick="getFP();"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></button>
         </div>
         <div class="col-xs-6"><textarea id="plain" style="width:100%;height:300px;"></textarea></div>
       </div><!--/row-->
@@ -70,6 +72,7 @@
     <script src="js/bcmath-min.js"></script>
     <script src="js/pdf417-min.js"></script>
     <script src="js/aes.js"></script>
+    <script src="js/fingerprint.js"></script>
     
     <script type="text/javascript">
 
@@ -82,6 +85,13 @@
             var pt = CryptoJS.AES.decrypt(enc, g_encKey);
             console.log(pt.toString(CryptoJS.enc.Utf8));
             return pt.toString(CryptoJS.enc.Utf8);
+      }
+
+      function getFP() {
+            new Fingerprint2().get(function(result, components){
+                    localStorage.fp = result;
+                    $('#plain').val("Terminal Fingerprint ID: " + result);
+            });
       }
        
         function decr() {
@@ -104,6 +114,7 @@
             });
 
             retStr = retStr + "\nTOTAL: " + j.To + "\n" + "TENDERED:" + j.Te + "\n" + "ON:" + j.D; 
+            retStr = retStr + "\nTerm. ID: " + j.Fp + "\nRecpt ID: " + j.Rc;
 
             $('#plain').val(retStr);           
         }

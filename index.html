@@ -116,6 +116,7 @@
     <script src="js/bcmath-min.js"></script>
     <script src="js/pdf417-min.js"></script>
     <script src="js/aes.js"></script>
+    <script src="js/fingerprint.js"></script>
     
     <script type="text/javascript">
         var purchased = [];
@@ -233,19 +234,30 @@
 
         function getEncStr() {
             var o = {};
+
+            o.Fp = "NoFP";
+            o.Rc = "NoRc";
             
             var l = jQuery.extend(true, {}, purchased);
             $.each(l, function(i, item) {
                 delete item.amt;
                 delete item.name;
             });
+            
             o.P = l;
-            console.log(l);
             o.Te = tendered;
             o.To = total;
             o.C = change;
             o.Y = menuYear;
             o.D = $('#dt').html();
+
+
+            if (typeof(Storage) !== "undefined") {
+                localStorage.recptCount = (localStorage.recptCount * 1) + 1;
+                o.Rc = localStorage.recptCount;
+                o.Fp = localStorage.fp;
+            }
+
             var encrypted = CryptoJS.AES.encrypt(JSON.stringify(o), encKey); 
             console.log(encrypted.toString());
             return encrypted.toString();
@@ -320,6 +332,17 @@
             });
             
             clearAmount();
+
+            if (typeof(Storage) !== "undefined") {
+                if(!localStorage.recptCount) {
+                    localStorage.recptCount = "1001";
+
+                    new Fingerprint2().get(function(result, components){
+                        localStorage.fp = result;
+                    });
+                }
+                console.log("Using recpt. ID: " + localStorage.recptCount + " and fingerprint: " + localStorage.fp);
+            }
 
             $(document).keyup(function(e) {
                 if (e.keyCode == 27) { 
