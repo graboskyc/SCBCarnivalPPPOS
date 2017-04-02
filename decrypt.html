@@ -52,7 +52,7 @@
           <br><br>
           <button class="btn btn-danger widebtn" onclick="clearRecpts();"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
           <br><br>
-          <button class="btn btn-default widebtn" onclick="getFP();"><span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span></button>
+          <button class="btn btn-default widebtn" onclick="getFP();"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button>
         </div>
         <div class="col-xs-6"><textarea id="plain" style="width:100%;height:300px;"></textarea></div>
       </div><!--/row-->
@@ -88,10 +88,12 @@
       }
 
       function getFP() {
-            new Fingerprint2().get(function(result, components){
-                    localStorage.fp = result;
-                    $('#plain').val("Terminal Fingerprint ID: " + result);
-            });
+            var retStr = "";
+            retStr = "Terminal Fingerprint ID: " + localStorage.fp + "\n\n";
+
+            retStr = retStr + "Current Receipt ID: " + localStorage.recptCount;
+
+            $('#plain').val(retStr); 
       }
        
         function decr() {
