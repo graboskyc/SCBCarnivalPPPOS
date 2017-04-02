@@ -26,7 +26,7 @@
       <nav class="navbar navbar-inverse navbar-fixed-top vis-print">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand sitename vis-print" href="#"></a>
+          <a class="navbar-brand sitename vis-print" href="index.html"></a>
         </div>
         <div id="navbar">
 
@@ -109,21 +109,21 @@
         }
 
         function recallRecpts() {
+          var retStr = "No receipts stored.";
           if (typeof(Storage) !== "undefined") {
               if(localStorage.recptArr) {
-                  var retStr = "";
+                  retStr = "";
                   var ra = JSON.parse(localStorage.recptArr);
                   $.each(ra, function(i, item) {
                     retStr = retStr + item + "\n\n"; 
                 });
-
-                $('#plain').val(retStr);
               }
           }
+          $('#plain').val(retStr);
         }
 
         function clearRecpts() {
-          var r = confirm("Clear all recpts?");
+          var r = confirm("Clear all receipts?");
             if (r == true) {
                 localStorage.clear();
                 alert("Local storage cleared");
@@ -131,7 +131,13 @@
         }
 
         function backupRecpts() {
-          $('#plain').val(localStorage.recptArr);
+          var retStr = "No receipts stored.";
+          if (typeof(Storage) !== "undefined") {
+              if(localStorage.recptArr) {
+                  retStr = localStorage.recptArr;
+                };
+          }
+          $('#plain').val(retStr);
         }
         
         function jsonpCallback(json) {   
