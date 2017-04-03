@@ -64,9 +64,12 @@
                             <div class="span4"><div class="num"><div class="txt">1</div></div></div>
                             <div class="span4"><div class="num"><div class="txt">2</div></div></div>
                             <div class="span4"><div class="num"><div class="txt">3</div></div></div>
-                            <div class="span4"><div class="num" data-special="clear" style="background-color:#d9534f;"><div class="txt"><span class="glyphicon glyphicon-remove-circle" aria-hidden="true"></span></div></div></div>
+                            <div class="span4"><div class="num" data-special="bs" style="background-color:#d9534f;"><div class="txt"><span class="glyphicon glyphicon-arrow-left" aria-hidden="true"></span></div></div></div>
                             <div class="span4"><div class="num"><div class="txt">0</div></div></div>
                             <div class="span4"><div class="num" data-special="credit"><div class="txt"><span class="glyphicon glyphicon-credit-card" aria-hidden="true"></span></div></div></div>
+                            <div class="span4"></div>
+                            <div class="span4"><div class="num"><div class="txt">00</div></div></div>
+                            <div class="span4"></div>
                         </div>
                 </div>
             </div>
@@ -148,8 +151,8 @@
             $('#website').html(json.website);
             $('#eventdate').html(json.eventdate);
             $('#logo').attr('src','imgs/'+json.logo);
-	
 		}
+
 		function addAmount(id) {
 			var amnt = $('#div_'+id).attr("data-price");
 			var currAmnt = total * 1;
@@ -193,6 +196,7 @@
             
             $('#btn_total').html('Total: $'+total);
         }
+
 		function clearAmount(){
             total = 0;
 			$('#purchasedItemsDiv').html('<ul id="purchasedItems"></ul>');
@@ -225,6 +229,7 @@
             }
             else if($('#telNumber').val() != '') {
                 tendered = $('#telNumber').val() * 1;
+                tendered = tendered / 100;
                 $('#tendered').html(tendered.toFixed(2));
                 
                 change = ((tendered*1) - (total*1));
@@ -329,6 +334,11 @@
 
                 if(num.attr("data-special") == "clear") {
                     clearAmount();
+                }
+                else if(num.attr("data-special") == "bs") {
+                    var v = $('#telNumber').val();
+                    $('#telNumber').val(v.substring(0, v.length - 1));
+                    calcChange();
                 }
                 else if(num.attr("data-special") == "credit") {
                     $('#telNumber').val('credit');
