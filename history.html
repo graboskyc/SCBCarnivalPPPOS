@@ -1,0 +1,172 @@
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;"> 
+
+    <title></title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="css/pos.css" rel="stylesheet">
+
+    <link rel="apple-touch-icon" sizes="57x57" href="ico/apple-icon-57x57.png">
+    <link rel="apple-touch-icon" sizes="60x60" href="ico/apple-icon-60x60.png">
+    <link rel="apple-touch-icon" sizes="72x72" href="ico/apple-icon-72x72.png">
+    <link rel="apple-touch-icon" sizes="76x76" href="ico/apple-icon-76x76.png">
+    <link rel="apple-touch-icon" sizes="114x114" href="ico/apple-icon-114x114.png">
+    <link rel="apple-touch-icon" sizes="120x120" href="ico/apple-icon-120x120.png">
+    <link rel="apple-touch-icon" sizes="144x144" href="ico/apple-icon-144x144.png">
+    <link rel="apple-touch-icon" sizes="152x152" href="ico/apple-icon-152x152.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="ico/apple-icon-180x180.png">
+    <link rel="icon" type="image/png" sizes="192x192"  href="ico/android-icon-192x192.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="ico/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="ico/favicon-96x96.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="ico/favicon-16x16.png">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="ico/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="shortcut icon" href="ico/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="ico/favicon.ico" type="image/x-icon">
+    
+    <style>
+      .widebtn { text-align:center; width:100%; vertical-align:middle; margin-bottom:5px; }
+    </style>
+  </head>
+
+  <body>
+      
+      <nav class="navbar navbar-inverse navbar-fixed-top vis-print">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand sitename vis-print" href="#"></a>
+        </div>
+        <div id="navbar">
+
+        </div><!--/.navbar-collapse -->
+      </div>
+      
+    </nav><!-- /.navbar -->
+    
+    <div><p style="height:100px;">&nbsp;</p></div>
+
+    <div class="container">
+
+      <div class="row">
+        <div class="col-xs-4"><h1>Recepits</h1></div>
+        <div class="col-xs-8"><h1>Itemization</h1></div>
+      </div><!--/row-->
+
+      <div class="row">
+        <div class="col-xs-4" id="divrecptlist"></div>
+        <div class="col-xs-8" id="rightside"></div>
+      </div><!--/row-->
+
+      <footer class="hidden-print">
+        <hr>
+        <p class="sitename" style="float:left;"></p>
+        <p style="float:right;"><a href="index.html">Register</a> | <a href="history.html">History</a> | <a href="decrypt.html">Admin</a></p>
+      </footer>
+
+    </div><!--/.container-->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/jquery.js"></script>
+    <script src="js/jquery-dateFormat.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="js/ie10-viewport-bug-workaround.js"></script>
+    
+    <script src="js/bcmath-min.js"></script>
+    <script src="js/pdf417-min.js"></script>
+    <script src="js/aes.js"></script>
+    <script src="js/fingerprint.js"></script>
+    
+    <script type="text/javascript">
+
+      var g_json = "";
+      var g_encKey = "";
+
+      function getPT(enc) {
+            var pt = CryptoJS.AES.decrypt(enc, g_encKey);
+            return pt.toString(CryptoJS.enc.Utf8);
+      }
+
+        function itemize(id) {
+            var ra = JSON.parse(localStorage.recptArr);
+            var pt = getPT(ra[id]);
+            var j = JSON.parse(pt);
+
+            $('#plain').val("");
+            var retStr = ""; 
+
+            var l = jQuery.extend(true, {}, j.P);
+            $.each(l, function(i, item) {
+                var inventoryItem = $.grep(g_json.products, function(e){ return e.id == item.id; });
+                var ii = inventoryItem[0];
+                retStr = retStr + ii.name + " @ $" + ii.price + " x" + item.qty + "\n"; 
+            });
+
+            retStr = retStr + "\nTOTAL: " + j.To + "\n" + "TENDERED:" + j.Te + "\n" + "ON:" + j.D; 
+            retStr = retStr + "\nTerm. ID: " + j.Fp + "\nRecpt ID: " + j.Rc;
+
+            $('#rightside').html("<pre>"+retStr+"</pre>");        
+        }
+
+        function recallRecpts() {
+          if (typeof(Storage) !== "undefined") {
+              if(localStorage.recptArr) {
+                  retStr = "";
+                  var ra = JSON.parse(localStorage.recptArr);
+                  var index = 0;
+
+                  var raReversed = [];
+
+                  $.each(ra, function(i, item) {
+                    var pt = getPT(item);
+                    var j = JSON.parse(pt);
+
+                    var tender = "usd";
+                    if (j.Te == "Credit") { tender = "credit-card"; }
+
+                    raReversed.push({"index":index,"d":j.D, "tender":tender, "total":j.To});
+                    index = index + 1;
+                  });
+
+                  raReversed.reverse();
+
+                  $.each(raReversed, function(i, item) {
+                    $('#divrecptlist').append("<button class='btn btn-success widebtn' data-index='"+item.index+"' onclick='itemize("+item.index+")'><span class='glyphicon glyphicon-"+item.tender+"' aria-hidden='true'></span>&nbsp;"+item.d+" ($"+item.total+")</button><br />");
+                  });
+              }
+          }
+          $('#plain').val(retStr);
+        }
+        
+        function jsonpCallback(json) {   
+            g_json = json;
+            g_encKey = g_json.encKey;
+            $(".sitename").html(json.sitename);
+            $("title").html(json.sitename);
+            $('#eventname').html(json.eventname);
+            $('#website').html(json.website);
+            $('#logo').attr('src','imgs/'+json.logo);
+
+            recallRecpts();
+		    }
+
+	</script>
+    
+    <script src="products.js" type="text/javascript"></script>
+  </body>
+</html>
