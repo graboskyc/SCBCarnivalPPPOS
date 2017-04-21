@@ -65,7 +65,8 @@
       </div><!--/row-->
 
       <div class="row">
-        <div class="col-xs-4" id="divrecptlist" style="height:520px;overflow-y:scroll;overflow-x:hidden;"></div>
+        <div class="col-xs-3" id="divrecptlist" style="height:520px;overflow-y:scroll;overflow-x:hidden;"></div>
+        <div class="col-xs-1" id="divdellist" style="height:520px;overflow-y:scroll;overflow-x:hidden;"></div> 
         <div class="col-xs-8" id="rightside"></div>
       </div><!--/row-->
 
@@ -123,6 +124,16 @@
             $('#rightside').html("<pre style='height:500px;width:100%;overflow-y:scroll;overflow-x:hidden;'>"+retStr+"</pre>");        
         }
 
+        function del(id) {
+          var r = confirm("Really delete this reciept?");
+          if (r == true) {
+               var ra = JSON.parse(localStorage.recptArr);
+              ra.splice(id,1);
+              localStorage.recptArr = JSON.stringify(ra);
+              window.location = window.location;
+          }
+        }
+
         function recallRecpts() {
           if (typeof(Storage) !== "undefined") {
               if(localStorage.recptArr) {
@@ -147,6 +158,7 @@
 
                   $.each(raReversed, function(i, item) {
                     $('#divrecptlist').append("<button class='btn btn-success widebtn' data-index='"+item.index+"' onclick='itemize("+item.index+")'><span class='glyphicon glyphicon-"+item.tender+"' aria-hidden='true'></span>&nbsp;"+item.d+" ($"+item.total+")</button><br />");
+                    $('#divdellist').append("<button class='btn btn-danger widebtn' data-index='"+item.index+"' onclick='del("+item.index+")'><span class='glyphicon glyphicon-remove-sign' aria-hidden='true'></span></button><br />");
                   });
               }
           }
