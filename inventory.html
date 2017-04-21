@@ -37,7 +37,7 @@
     <link rel="icon" href="ico/favicon.ico" type="image/x-icon">
     
     <style>
-      .widebtn { text-align:center; width:100%; vertical-align:middle; margin-bottom:5px; }
+      .ptbl { font-size:22px;}
     </style>
   </head>
 
@@ -60,13 +60,9 @@
     <div class="container">
 
       <div class="row">
-        <div class="col-xs-4"><h1>Recepits</h1></div>
-        <div class="col-xs-8"><h1>Itemization</h1></div>
-      </div><!--/row-->
-
-      <div class="row">
-        <div class="col-xs-4" id="divrecptlist" style="height:520px;overflow-y:scroll;overflow-x:hidden;"></div>
-        <div class="col-xs-8" id="rightside"></div>
+        <table class="table table-striped" id="tbl">
+          <tr><th><h1>Items</h1></th><th><h1>Qty Sold</h1></th></tr>
+        </table>
       </div><!--/row-->
 
       <footer class="hidden-print">
@@ -102,55 +98,50 @@
             return pt.toString(CryptoJS.enc.Utf8);
       }
 
-        function itemize(id) {
-            var ra = JSON.parse(localStorage.recptArr);
-            var pt = getPT(ra[id]);
-            var j = JSON.parse(pt);
-
-            $('#plain').val("");
-            var retStr = ""; 
-
-            var l = jQuery.extend(true, {}, j.P);
-            $.each(l, function(i, item) {
-                var inventoryItem = $.grep(g_json.products, function(e){ return e.id == item.id; });
-                var ii = inventoryItem[0];
-                retStr = retStr + ii.name + " @ $" + ii.price + " x" + item.qty + "\n"; 
-            });
-
-            retStr = retStr + "\nTOTAL: " + j.To + "\n" + "TENDERED:" + j.Te + "\n" + "ON:" + j.D; 
-            retStr = retStr + "\nTerm. ID: " + j.Fp + "\nRecpt ID: " + j.Rc;
-
-            $('#rightside').html("<pre style='height:500px;width:100%;overflow-y:scroll;overflow-x:hidden;'>"+retStr+"</pre>");        
-        }
-
         function recallRecpts() {
+          var products = [];
           if (typeof(Storage) !== "undefined") {
               if(localStorage.recptArr) {
-                  retStr = "";
                   var ra = JSON.parse(localStorage.recptArr);
-                  var index = 0;
-
-                  var raReversed = [];
-
-                  $.each(ra, function(i, item) {
-                    var pt = getPT(item);
+                  
+                  $.each(ra, function(o, recpt) {
+                    var pt = getPT(recpt);
                     var j = JSON.parse(pt);
+                    var l = jQuery.extend(true, {}, j.P);
 
-                    var tender = "usd";
-                    if (j.Te == "Credit") { tender = "credit-card"; }
+                    $.each(l, function(i, item) {
+                        var inventoryItem = $.grep(g_json.products, function(e){ return e.id == item.id; });
+                        var ii = inventoryItem[0];
 
-                    raReversed.push({"index":index,"d":j.D, "tender":tender, "total":j.To});
-                    index = index + 1;
+                        if (products.length == 0 ) {
+                          products.push({"name":ii.name, "qty":item.qty}); 
+                        }
+                        else 
+                        {
+
+                          var alreadyPurchased = false;
+                  
+                          $.each(products, function(p, pi) {
+                              if (pi.name == ii.name) {
+                                  pi.qty = (pi.qty*1) + item.qty;
+                                  alreadyPurchased = true;
+                              } 
+                          });
+                          
+                          if (alreadyPurchased == false) {
+                                  products.push({"name":ii.name, "qty":item.qty}); 
+                          }
+                        }
+                    });
                   });
 
-                  raReversed.reverse();
-
-                  $.each(raReversed, function(i, item) {
-                    $('#divrecptlist').append("<button class='btn btn-success widebtn' data-index='"+item.index+"' onclick='itemize("+item.index+")'><span class='glyphicon glyphicon-"+item.tender+"' aria-hidden='true'></span>&nbsp;"+item.d+" ($"+item.total+")</button><br />");
-                  });
               }
           }
-          $('#plain').val(retStr);
+          
+          $.each(products, function(i, p) {
+            $('#tbl').append("<tr><td>"+p.name+"</td><td>"+p.qty+"</td></tr>");
+          });
+          
         }
         
         function jsonpCallback(json) {   
