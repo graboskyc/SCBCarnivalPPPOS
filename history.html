@@ -65,7 +65,7 @@
       </div><!--/row-->
 
       <div class="row">
-        <div class="col-xs-4" id="divrecptlist"></div>
+        <div class="col-xs-4" id="divrecptlist" style="height:520px;overflow-y:scroll;overflow-x:hidden;"></div>
         <div class="col-xs-8" id="rightside"></div>
       </div><!--/row-->
 
@@ -120,7 +120,7 @@
             retStr = retStr + "\nTOTAL: " + j.To + "\n" + "TENDERED:" + j.Te + "\n" + "ON:" + j.D; 
             retStr = retStr + "\nTerm. ID: " + j.Fp + "\nRecpt ID: " + j.Rc;
 
-            $('#rightside').html("<pre>"+retStr+"</pre>");        
+            $('#rightside').html("<pre style='height:500px;width:100%;overflow-y:scroll;overflow-x:hidden;'>"+retStr+"</pre>");        
         }
 
         function recallRecpts() {
