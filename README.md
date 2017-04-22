@@ -32,3 +32,12 @@ When printing a receipt, a bar code is created at the bottom using an encrypted 
 ![](SS/ss5.PNG)
 
 ![](SS/ss6.png)
+
+# Third Party Libraries
+* [Bootstrap](http://getbootstrap.com)
+* [jQuery](http://jquery.com/)
+* [Crypto.js](code.google.com/p/crypto-js)
+* [BCMath](https://sourceforge.net/projects/bcmath-js/)
+* [Fingerprintjs2](https://github.com/Valve/fingerprintjs2)
+* [pdf417 js](https://github.com/bkuzmic/pdf417-js)
+* [FileSaver.js](https://github.com/eligrey/FileSaver.js)
