@@ -60,9 +60,11 @@
     <div class="container">
 
       <div class="row">
-        <div class="col-xs-4"><textarea id="crypt" style="width:100%;height:300px;"></textarea></div>
+        <div class="col-xs-4"><textarea id="crypt" style="width:100%;height:400px;"></textarea></div>
         <div class="col-xs-2" style="text-align:center;">
           <button class="btn btn-success widebtn" onclick="decr();"><span class="glyphicon glyphicon-share" aria-hidden="true"></span></button>
+          <br><br>
+          <button class="btn btn-warning widebtn" onclick="itemize();"><span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span></button>
           <br><br>
           <button class="btn btn-primary widebtn" onclick="recallRecpts();"><span class="glyphicon glyphicon-hourglass" aria-hidden="true"></span></button>
           <br><br>
@@ -74,7 +76,7 @@
           <br><br>
           <button class="btn btn-default widebtn" onclick="getFP();"><span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span></button>
         </div>
-        <div class="col-xs-6"><textarea id="plain" style="width:100%;height:300px;"></textarea></div>
+        <div class="col-xs-6"><textarea id="plain" style="width:100%;height:400px;"></textarea></div>
       </div><!--/row-->
 
       <footer class="hidden-print">
@@ -146,6 +148,26 @@
           }
           $('#plain').val(retStr);
           
+        }
+
+        function itemize() {
+            var pt = getPT();
+            var j = JSON.parse(pt);
+
+            $('#plain').val("");
+            var retStr = ""; 
+
+            var l = jQuery.extend(true, {}, j.P);
+            $.each(l, function(i, item) {
+                var inventoryItem = $.grep(g_json.products, function(e){ return e.id == item.id; });
+                var ii = inventoryItem[0];
+                retStr = retStr + ii.name + " @ $" + ii.price + " x" + item.qty + "\n"; 
+            });
+
+            retStr = retStr + "\nTOTAL: " + j.To + "\n" + "TENDERED:" + j.Te + "\n" + "ON:" + j.D; 
+            retStr = retStr + "\nTerm. ID: " + j.Fp + "\nRecpt ID: " + j.Rc;
+
+            $('#plain').val(retStr);           
         }
 
         function replaceId() {
