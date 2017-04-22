@@ -61,7 +61,7 @@
 
       <div class="row">
         <table class="table table-striped" id="tbl">
-          <tr><th><h1>Items</h1></th><th><h1>Qty Sold</h1></th></tr>
+          <tr><th>Items</th><th>Qty Sold</th><th>Unit Price</th></tr>
         </table>
       </div><!--/row-->
 
@@ -114,11 +114,10 @@
                         var ii = inventoryItem[0];
 
                         if (products.length == 0 ) {
-                          products.push({"name":ii.name, "qty":item.qty}); 
+                          products.push({"name":ii.name, "qty":item.qty, "price":ii.price}); 
                         }
                         else 
                         {
-
                           var alreadyPurchased = false;
                   
                           $.each(products, function(p, pi) {
@@ -129,7 +128,7 @@
                           });
                           
                           if (alreadyPurchased == false) {
-                                  products.push({"name":ii.name, "qty":item.qty}); 
+                                  products.push({"name":ii.name, "qty":item.qty, "price":ii.price}); 
                           }
                         }
                     });
@@ -139,7 +138,7 @@
           }
           
           $.each(products, function(i, p) {
-            $('#tbl').append("<tr><td>"+p.name+"</td><td>"+p.qty+"</td></tr>");
+            $('#tbl').append("<tr><td>"+p.name+"</td><td>"+p.qty+"</td><td>$"+p.price+"</td></tr>");
           });
           
         }
