@@ -140,7 +140,9 @@
               }
 
               var blob = new Blob([localStorage.recptArr], {type: "text/plain;charset=utf-8"});
-              saveAs(blob, localStorage.fp+".txt");
+              var d = new Date();
+              var n = d.toISOString();
+              saveAs(blob, localStorage.fp+"_"+n+".txt");
           }
           $('#plain').val(retStr);
           
