@@ -40,6 +40,7 @@ h2 { font-size:28px !important;position: relative; min-height:100px;}
     background-repeat:no-repeat;
     position:relative;
     text-align: center;
+    background-image: cover;
 }
 td,th {
     padding: 6px;
