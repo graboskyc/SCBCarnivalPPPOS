@@ -37,7 +37,9 @@
     <link rel="icon" href="ico/favicon.ico" type="image/x-icon">
     
     <style>
-      .widebtn { text-align:center; width:100%; vertical-align:middle; margin-bottom:5px; }
+      .widebtn { text-align:center; width:75%; vertical-align:middle; float:left; }
+      .skinbtn { text-align:center; width:20%; vertical-align:middle; float:right; }
+      .cntrbtn { width:100%; margin-bottom:5px; height:40px; }
     </style>
   </head>
 
@@ -60,14 +62,13 @@
     <div class="container">
 
       <div class="row">
-        <div class="col-xs-4"><h1>Recepits</h1></div>
-        <div class="col-xs-8"><h1>Itemization</h1></div>
+        <div class="col-xs-5"><h1>Recepits</h1></div>
+        <div class="col-xs-7"><h1>Itemization</h1></div>
       </div><!--/row-->
 
       <div class="row">
-        <div class="col-xs-3" id="divrecptlist" style="height:520px;overflow-y:scroll;overflow-x:hidden;"></div>
-        <div class="col-xs-1" id="divdellist" style="height:520px;overflow-y:scroll;overflow-x:hidden;"></div> 
-        <div class="col-xs-8" id="rightside"></div>
+        <div class="col-xs-5" id="divrecptlist" style="height:520px;overflow-y:scroll;overflow-x:hidden;"></div>
+        <div class="col-xs-7" id="rightside"></div>
       </div><!--/row-->
 
       <footer class="hidden-print">
@@ -125,7 +126,7 @@
         }
 
         function del(id) {
-          var r = confirm("Really delete this reciept?");
+          var r = confirm("Really delete this reciept to void the sale?");
           if (r == true) {
                var ra = JSON.parse(localStorage.recptArr);
               ra.splice(id,1);
@@ -157,8 +158,12 @@
                   raReversed.reverse();
 
                   $.each(raReversed, function(i, item) {
-                    $('#divrecptlist').append("<button class='btn btn-success widebtn' data-index='"+item.index+"' onclick='itemize("+item.index+")'><span class='glyphicon glyphicon-"+item.tender+"' aria-hidden='true'></span>&nbsp;"+item.d+" ($"+item.total+")</button><br />");
-                    $('#divdellist').append("<button class='btn btn-danger widebtn' data-index='"+item.index+"' onclick='del("+item.index+")'><span class='glyphicon glyphicon-remove-sign' aria-hidden='true'></span></button><br />");
+                    var appendStr = "";
+                    appendStr = appendStr + "<div class='cntrbtn'>";
+                    appendStr = appendStr + "<button class='btn btn-success widebtn' data-index='"+item.index+"' onclick='itemize("+item.index+")'><span class='glyphicon glyphicon-"+item.tender+"' aria-hidden='true'></span>&nbsp;"+item.d+" ($"+item.total+")</button>";
+                    appendStr = appendStr + "&nbsp;<button class='btn btn-danger skinbtn' data-index='"+item.index+"' onclick='del("+item.index+")'><span class='glyphicon glyphicon-remove-sign' aria-hidden='true'></span></button>";
+                    appendStr = appendStr + "</div>";
+                    $('#divrecptlist').append(appendStr);
                   });
               }
           }
