@@ -99,6 +99,7 @@
     <script src="js/pdf417-min.js"></script>
     <script src="js/aes.js"></script>
     <script src="js/fingerprint.js"></script>
+    <script src="js/fileSaver-min.js"></script>
     
     <script type="text/javascript">
 
@@ -177,6 +178,9 @@
                 };
           }
           $('#plain').val(retStr);
+
+          var blob = new Blob([retStr], {type: "text/plain;charset=utf-8"});
+          saveAs(blob, localStorage.fp+".txt");
         }
         
         function jsonpCallback(json) {   
