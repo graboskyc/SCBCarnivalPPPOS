@@ -453,11 +453,11 @@
             var j = JSON.parse(pt);
             if (j.Rc == $("#txt_recptID").val()) {
                 encIndex = i;
+                $('#logo').attr('src', 'imgs/logo_' + j.Y + ".png");
                 $('#dt').html(j.D);
                 $('#btn_change').html('Change: $' + j.C);
                 $('#btn_tendered').html('Tendered: $' + j.Te);
                 $('#btn_total').html('Tendered: $' + j.To);
-                $('#logo').attr('src', 'imgs/logo_' + j.Y + ".png");
 
                 $('#purchasedItems').append('<div class="list-group-item"><div class="itemholder"><b><i>REPRINT REPRINT REPRINT REPRINT REPRINT REPRINT</i></b></div></div>');
 
@@ -473,7 +473,7 @@
 
         if (encIndex > -1) {
             genBarCode(ra[encIndex]);
-            window.print();
+            setTimeout(function(){ window.print(); }, 500); // take a sec to load new graphics
         }
         else {
             alert("That ID doesn't exist!");
