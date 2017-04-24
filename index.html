@@ -167,7 +167,7 @@
         <footer class="hidden-print">
             <hr>
             <p class="sitename" style="float:left;"></p>
-            <p style="float:right;"><a href="index.html">Register</a> | <a href="#myModal" data-toggle="modal" data-target="#myModal">Reprint</a>                | <a href="history.html">History</a> | <a href="inventory.html">Inventory</a> | <a href="admin.html">Admin</a></p>
+            <p style="float:right;"><a href="index.html">Register</a> | <a href="#myModal" data-toggle="modal" data-target="#myModal">Reprint</a> | <a href="history.html">History</a> | <a href="inventory.html">Inventory</a> | <a href="admin.html">Admin</a></p>
         </footer>
 
         <div class="visible-print" style="position:absolute;bottom:60px;width:100%;text-align:center;">
@@ -257,7 +257,7 @@
         $('#eventname').html(json.eventname);
         $('#website').html(json.website);
         $('#eventdate').html(json.eventdate);
-        $('#logo').attr('src', 'imgs/' + json.logo);
+        $('#logo').attr('src', 'imgs/logo_' + g_menuYear + ".png");
     }
 
     function addAmount(id) {
@@ -457,6 +457,7 @@
                 $('#btn_change').html('Change: $' + j.C);
                 $('#btn_tendered').html('Tendered: $' + j.Te);
                 $('#btn_total').html('Tendered: $' + j.To);
+                $('#logo').attr('src', 'imgs/logo_' + j.Y + ".png");
 
                 $('#purchasedItems').append('<div class="list-group-item"><div class="itemholder"><b><i>REPRINT REPRINT REPRINT REPRINT REPRINT REPRINT</i></b></div></div>');
 

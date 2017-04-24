@@ -33,7 +33,6 @@ jsonpCallback({"products":[
     "sitename":"Pete and Larry's Place",
     "eventname":"St. Charles Carnival",
     "website":"www.scbcarnival.com",
-    "logo":"logo.png",
     "eventdate":"June 12-17, 6-11pm nightly",
 	"menuyear":2017
     });
