@@ -107,7 +107,7 @@
       <footer class="hidden-print">
         <hr>
         <p class="sitename" style="float:left;"></p>
-        <p style="float:right;"><a href="index.html">Register</a> | <a href="history.html">History</a> | <a href="inventory.html">Inventory</a> | <a href="admin.html">Admin</a></p>
+        <p style="float:right;"><a href="index.html">Register</a> | <a href="#myModal" data-toggle="modal" data-target="#myModal">Reprint</a> | <a href="history.html">History</a> | <a href="inventory.html">Inventory</a> | <a href="admin.html">Admin</a></p>
       </footer>
 
         <div class="visible-print" style="position:absolute;bottom:60px;width:100%;text-align:center;">
@@ -124,6 +124,24 @@
         <div class="visible-print" style="position:absolute;bottom:10px;width:100%;text-align:center;">
             <p>Recieved By: __________________________________</p>
         </div>
+
+        <div class="modal fade hidden-print" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Reprint Recpt</h4>
+            </div>
+            <div class="modal-body">
+                Old Receipt ID: <input type="text" id="txt_recptID" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="reprintRecpt()">Reprint Reciept</button>
+            </div>
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+        </div><!-- /.modal -->
 
     </div><!--/.container-->
 
@@ -147,15 +165,18 @@
         var total = 0;
         var change = 0;
         var tendered = 0;
-        var menuYear = 0;
-        var encKey = "";
+        var g_menuYear = 0;
+        var g_encKey = "";
+        var g_json = "";
         
 		function jsonpCallback(json) {   
-            menuYear = json.menuyear;
-            encKey = json.encKey;
+            g_menuYear = json.menuyear;
+            g_encKey = json.encKey;
+            g_json = json;
+
 			$.each(json.products, function(i, item) {
                 var years = json.products[i].years;
-                if(years.indexOf(menuYear) != -1){
+                if(years.indexOf(g_menuYear) != -1){
                     var id = json.products[i].id;
                     var name = json.products[i].name;
                     var price = json.products[i].price;
@@ -281,7 +302,7 @@
             o.Te = tendered;
             o.To = total;
             o.C = change;
-            o.Y = menuYear;
+            o.Y = g_menuYear;
             o.D = $('#dt').html();
 
 
@@ -291,7 +312,7 @@
                 o.Fp = localStorage.fp;
             }
 
-            var encrypted = CryptoJS.AES.encrypt(JSON.stringify(o), encKey); 
+            var encrypted = CryptoJS.AES.encrypt(JSON.stringify(o), g_encKey); 
             console.log(encrypted.toString());
             return encrypted.toString();
         }
@@ -339,6 +360,11 @@
             }
         }
         
+        function getPT(enc) {
+            var pt = CryptoJS.AES.decrypt(enc, g_encKey);
+            return pt.toString(CryptoJS.enc.Utf8);
+        }
+
         function printRecpt() {
             setTime();
             $('#bc').html(" ");
@@ -346,6 +372,48 @@
             genBarCode(encrypted);
             writeRecptStorage(encrypted);
             window.print();
+        }
+
+        function reprintRecpt() {
+            $('#dt').html();
+            $('#bc').html(" ");
+            var encrypted = "";
+            var encIndex = -1;
+
+            $('#purchasedItemsDiv').html('<ul id="purchasedItems"></ul>');
+
+            var ra = JSON.parse(localStorage.recptArr);
+
+            $.each(ra, function(i, recpt) {
+                var pt = getPT(recpt);
+                var j = JSON.parse(pt);
+                if(j.Rc == $("#txt_recptID").val()) {
+                    encIndex = i;
+                    $('#dt').html(j.D);
+                    $('#btn_change').html('Change: $'+j.C);
+                    $('#btn_tendered').html('Tendered: $'+j.Te);
+                    $('#btn_total').html('Tendered: $'+j.To);
+
+                    $('#purchasedItems').append('<div class="list-group-item"><div class="itemholder"><b><i>REPRINT REPRINT REPRINT REPRINT REPRINT REPRINT</i></b></div></div>');
+                    
+                    var l = jQuery.extend(true, {}, j.P);
+                    $.each(l, function(i, item) {
+                        var inventoryItem = $.grep(g_json.products, function(e){ return e.id == item.id; });
+                        var ii = inventoryItem[0];
+                        $('#purchasedItems').append('<div class="list-group-item"><div class="itemholder"><span class="itemqty">'+item.qty+'x</span> '+ii.name+' <div class="itemprice">($'+ii.price+')</div></div></div>');
+                    });
+
+                    $('#purchasedItems').append('<div class="list-group-item"><div class="itemholder"><b><i>REPRINT REPRINT REPRINT REPRINT REPRINT REPRINT</i></b></div></div>');
+                }
+            });
+
+            if(encIndex > -1) {
+                genBarCode(ra[encIndex]);
+                window.print();
+            }
+            else {
+                alert("That ID doesn't exist!");
+            }
         }
 
         function saveRecpt() {
