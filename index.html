@@ -421,6 +421,13 @@
             else {
                 localStorage.recptArr = JSON.stringify([encStr]);
             }
+
+            try {
+                $.post( "save.php", { recid: localStorage.recptCount, register: localStorage.fp, encText: encStr } );
+            } catch(err) {
+                console.log(err);
+            }
+            
         }
     }
 
