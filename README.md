@@ -41,3 +41,4 @@ When printing a receipt, a bar code is created at the bottom using an encrypted 
 * [Fingerprintjs2](https://github.com/Valve/fingerprintjs2)
 * [pdf417 js](https://github.com/bkuzmic/pdf417-js)
 * [FileSaver.js](https://github.com/eligrey/FileSaver.js)
+* [DataTables](https://datatables.net/)

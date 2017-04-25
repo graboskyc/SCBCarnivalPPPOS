@@ -61,7 +61,8 @@
 
       <div class="row">
         <table class="table table-striped" id="tbl">
-          <tr><th>Items</th><th>Qty Sold</th><th>Unit Price</th></tr>
+          <thead><tr><th>Items</th><th>Qty Sold</th><th>Unit Price</th></tr></thead>
+          <tbody id="tbl_body"></tbody>
         </table>
       </div><!--/row-->
 
@@ -87,6 +88,7 @@
     <script src="js/pdf417-min.js"></script>
     <script src="js/aes.js"></script>
     <script src="js/fingerprint.js"></script>
+    <script src="js/datatables.min.js"></script>
     
     <script type="text/javascript">
 
@@ -138,7 +140,7 @@
           }
           
           $.each(products, function(i, p) {
-            $('#tbl').append("<tr><td>"+p.name+"</td><td>"+p.qty+"</td><td>$"+p.price+"</td></tr>");
+            $('#tbl_body').append("<tr><td>"+p.name+"</td><td>"+p.qty+"</td><td>$"+p.price+"</td></tr>");
           });
           
         }
@@ -153,6 +155,8 @@
             $('#logo').attr('src','imgs/'+json.logo);
 
             recallRecpts();
+
+            $('#tbl').DataTable({"paging":false,"searching": false});
 		    }
 
 	</script>
