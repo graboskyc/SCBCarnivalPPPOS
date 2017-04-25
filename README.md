@@ -38,6 +38,8 @@ When printing a receipt, a bar code is created at the bottom using an encrypted 
 
 ![](SS/ss2.png)
 
+![](SS/ss7.png)
+
 ![](SS/ss3.png)
 
 ![](SS/ss4.png)
