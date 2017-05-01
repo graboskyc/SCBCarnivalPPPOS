@@ -70,7 +70,10 @@
         <div class="row row-offcanvas row-offcanvas-right">
 
             <div class="col-xs-12 col-sm-7 col-md-8 hidden-print">
-                <div class="row" id="inventory"></div>
+                <div class="row" id="inventorytabs"><ul class="nav nav-tabs" role="tablist" id="inventorytabsul"></div>
+                <div class="row tab-content" id="inventory">
+                    <div role="tabpanel" class="tab-pane active" id="tab_all"></div>
+                </div>
                 <!--/row-->
             </div>
             <!--/.col-xs-12.col-sm-9-->
@@ -167,7 +170,7 @@
         <footer class="hidden-print">
             <hr>
             <p class="sitename" style="float:left;"></p>
-            <p style="float:right;"><a href="index.html">Register</a> | <a href="#myModal" data-toggle="modal" data-target="#myModal">Reprint</a> | <a href="history.html">History</a> | <a href="inventory.html">Inventory</a> | <a href="admin.html">Admin</a></p>
+            <p style="float:right;"><a href="#myModal" data-toggle="modal" data-target="#myModal">Reprint</a> | <a href="history.html">History</a> | <a href="inventory.html">Inventory</a> | <a href="admin.html">Admin</a></p>
         </footer>
 
         <div class="visible-print" style="position:absolute;bottom:60px;width:100%;text-align:center;">
@@ -239,18 +242,36 @@
         g_encKey = json.encKey;
         g_json = json;
 
+        var tabsArr = [];
+
         $.each(json.products, function (i, item) {
             var years = json.products[i].years;
             if (years.indexOf(g_menuYear) != -1) {
+                
                 var id = json.products[i].id;
                 var name = json.products[i].name;
                 var price = json.products[i].price;
                 var itemType = json.products[i].itemType;
+
+                var tabname = "tab_"+itemType;
+
+                if(tabsArr.indexOf(itemType) == -1) {
+                    console.log("Creating tab");
+                    tabsArr.push(itemType);
+                    var liClass = "";
+                    
+                    $('#inventorytabsul').append('<li role="presentation" ><a href="#'+tabname+'" aria-controls="'+tabname+'" role="tab" data-toggle="tab">'+capitalize(itemType)+'</a></li>');
+                    $('#inventory').append('<div role="tabpanel" class="tab-pane" id="'+tabname+'"></div>');
+                }
+                
                 var html = '<div id="div_' + id + '" class="col-xs-6 col-lg-4 items ' + itemType + '" data-price="' + price + '" data-name="' + name + '" onclick="addAmount(' + id + ');"><h2>' + name + '</h2><p class="squareprice">' + price + '</p></div>'
 
-                $('#inventory').append(html);
+                $('#'+tabname).append(html);
+                $('#tab_all').append(html);
             }
         });
+
+        $('#inventorytabsul').append('<li role="presentation" class="active" ><a href="#tab_all" aria-controls="tab_all" role="tab" data-toggle="tab">All</a></li>');
 
         $(".sitename").html(json.sitename);
         $("title").html(json.sitename);
@@ -492,6 +513,15 @@
         var encrypted = getEncStr();
         writeRecptStorage(encrypted);
         alert("Saved Receipt!");
+    }
+
+    function capitalize(string) {
+        if(string.length > 2) { 
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+        else {
+            return string.toUpperCase();
+        }
     }
 
     $(document).ready(function () {
