@@ -260,7 +260,7 @@
                     tabsArr.push(itemType);
                     var liClass = "";
                     
-                    $('#inventorytabsul').append('<li role="presentation" ><a href="#'+tabname+'" aria-controls="'+tabname+'" role="tab" data-toggle="tab">'+capitalize(itemType)+'</a></li>');
+                    $('#inventorytabsul').append('<li role="presentation" class="'+tabname+'" ><a href="#'+tabname+'" aria-controls="'+tabname+'" role="tab" data-toggle="tab">'+capitalize(itemType)+'</a></li>');
                     $('#inventory').append('<div role="tabpanel" class="tab-pane" id="'+tabname+'"></div>');
                 }
                 
@@ -271,7 +271,7 @@
             }
         });
 
-        $('#inventorytabsul').append('<li role="presentation" class="active" ><a href="#tab_all" aria-controls="tab_all" role="tab" data-toggle="tab">All</a></li>');
+        $('#inventorytabsul').append('<li role="presentation" class="tab_all active" ><a href="#tab_all" aria-controls="tab_all" role="tab" data-toggle="tab">All</a></li>');
 
         $(".sitename").html(json.sitename);
         $("title").html(json.sitename);

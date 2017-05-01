@@ -9,26 +9,57 @@ body {
     background-color: #e6e6e6;
 }	
 
+.nav-tabs>li.active >a {
+    font-weight: bold !important;
+    text-decoration: underline;
+}
 .draft {
     background-color:#337ab7;
     background-image:url('../imgs/draft.png');
+}
+.tab_draft >a {
+    background-color:#337ab7 !important;
+    color:#e6e6e6 !important;
 }
 .bottle {
     background-color:#5bc0de;
     background-image:url('../imgs/bottle.png');
 }
+.tab_bottle >a {
+    background-color:#5bc0de !important;
+    color:#e6e6e6 !important;
+}
 .food {
     background-color:#5cb85c;
     background-image:url('../imgs/food.png');
+}
+.tab_food >a {
+    background-color:#5cb85c !important;
+    color:#e6e6e6 !important;
 }
 .na {
     background-color:#f0ad4e;
     background-image:url('../imgs/na.png');
 }
+.tab_na >a {
+    background-color:#f0ad4e !important;
+    color:#e6e6e6 !important;
+}
 .util {
     background-color:#d9534f;
     background-image:url('../imgs/util.png');
 }
+.tab_util >a {
+    background-color:#d9534f !important;
+    color:#e6e6e6 !important;
+}
+
+.tab_all >a {
+    background-color:#fff !important;
+    color:#333 !important;
+}
+
+
 h2 { font-size:28px !important;position: relative; min-height:100px;}
 .squareprice { font-size: 20px; position: absolute; bottom: 0; width:100px; text-align: center;}
 .items {
