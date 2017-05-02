@@ -11,7 +11,10 @@ body {
 
 .nav-tabs>li.active >a {
     font-weight: bold !important;
-    text-decoration: underline;
+    text-decoration: underline !important;;
+}
+.nav-tabs>li>a {
+    text-align: center !important;
 }
 .draft {
     background-color:#337ab7;

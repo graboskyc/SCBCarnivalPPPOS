@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;">
-
+    <meta name="theme-color" content="#333333" />
     <title></title>
 
     <!-- Bootstrap core CSS -->
@@ -37,6 +37,7 @@
     <meta name="theme-color" content="#ffffff">
     <link rel="shortcut icon" href="ico/favicon.ico" type="image/x-icon">
     <link rel="icon" href="ico/favicon.ico" type="image/x-icon">
+    
 </head>
 
 <body>
@@ -72,7 +73,7 @@
             <div class="col-xs-12 col-sm-7 col-md-8 hidden-print">
                 <div class="row" id="inventorytabs"><ul class="nav nav-tabs" role="tablist" id="inventorytabsul"></div>
                 <div class="row tab-content" id="inventory">
-                    <div role="tabpanel" class="tab-pane active" id="tab_all"></div>
+                    <div role="tabpanel" class="tab-pane fade in active" id="tab_all"></div>
                 </div>
                 <!--/row-->
             </div>
@@ -261,7 +262,7 @@
                     var liClass = "";
                     
                     $('#inventorytabsul').append('<li role="presentation" class="'+tabname+'" ><a href="#'+tabname+'" aria-controls="'+tabname+'" role="tab" data-toggle="tab">'+capitalize(itemType)+'</a></li>');
-                    $('#inventory').append('<div role="tabpanel" class="tab-pane" id="'+tabname+'"></div>');
+                    $('#inventory').append('<div role="tabpanel" class="tab-pane fade in" id="'+tabname+'"></div>');
                 }
                 
                 var html = '<div id="div_' + id + '" class="col-xs-6 col-lg-4 items ' + itemType + '" data-price="' + price + '" data-name="' + name + '" onclick="addAmount(' + id + ');"><h2>' + name + '</h2><p class="squareprice">' + price + '</p></div>'
