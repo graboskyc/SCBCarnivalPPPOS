@@ -19,7 +19,7 @@ jsonpCallback({"products":[
 	{"id":15,"name":"Blue Moon","price":"4.00","itemType":"bottle", "years":[2016,2017]},
 	{"id":16,"name":"Corona","price":"4.00","itemType":"bottle", "years":[2016,2017]},
 	{"id":25,"name":"Twisted Tea","price":"4.00","itemType":"bottle", "years":[2017]},
-	{"id":18,"name":"Wine","price":"4.00","itemType":"bottle", "years":[2016,2017]},
+	{"id":26,"name":"Wine","price":"4.50","itemType":"bottle", "years":[2017]},
 	{"id":19,"name":"Coors NA","price":"2.50","itemType":"na", "years":[2016,2017]},
 	{"id":20,"name":"Root Beer","price":"1.50","itemType":"na", "years":[2016,2017]},
 	{"id":21,"name":"Water","price":"1.50","itemType":"na", "years":[2016,2017]},
@@ -27,6 +27,7 @@ jsonpCallback({"products":[
 	// discontinued menu items
 	{"id":12,"name":"Guinness Draft","price":"5.50","itemType":"draft", "years":[2016]},
 	{"id":17,"name":"Smmr Shandy","price":"4.00","itemType":"bottle", "years":[2016]},
+	{"id":18,"name":"Wine","price":"4.00","itemType":"bottle", "years":[2016]},
 	],
 	// universal settings for app
 	"encKey":"B33p",
