@@ -63,7 +63,16 @@ body {
 }
 
 
-h2 { font-size:28px !important;position: relative; min-height:100px;}
+h2 { 
+    font-size:28px !important;
+    position: relative; 
+    min-height:100px; 
+    text-shadow:
+    -1px -1px 0 #000,
+    1px -1px 0 #000,
+    -1px 1px 0 #000,
+    1px 1px 0 #000;  
+}
 .squareprice { font-size: 20px; position: absolute; bottom: 0; width:100px; text-align: center;}
 .items {
     color:#FFF;
