@@ -265,7 +265,9 @@
                     $('#inventory').append('<div role="tabpanel" class="tab-pane fade in" id="'+tabname+'"></div>');
                 }
                 
-                var html = '<div id="div_' + id + '" class="col-xs-6 col-lg-4 items ' + itemType + '" data-price="' + price + '" data-name="' + name + '" onclick="addAmount(' + id + ');"><h2>' + name + '</h2><p class="squareprice">' + price + '</p></div>'
+                var special = "";
+                if(json.products[i].special) { special = " special"; }
+                var html = '<div id="div_' + id + '" class="col-xs-6 col-lg-4 items ' + itemType + special +'" data-price="' + price + '" data-name="' + name + '" onclick="addAmount(' + id + ');"><h2>' + name + '</h2><p class="squareprice">' + price + '</p></div>'
 
                 $('#'+tabname).append(html);
                 $('#tab_all').append(html);
