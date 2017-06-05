@@ -128,11 +128,15 @@
         function del(id) {
           var r = confirm("Really delete this reciept to void the sale?");
           if (r == true) {
-               var ra = JSON.parse(localStorage.recptArr);
-              ra.splice(id,1);
-              localStorage.recptArr = JSON.stringify(ra);
-              window.location = window.location;
+               delNoConfirm(id);
           }
+        }
+
+        function delNoConfirm(id) {
+            var ra = JSON.parse(localStorage.recptArr);
+            ra.splice(id,1);
+            localStorage.recptArr = JSON.stringify(ra);
+            window.location = window.location;
         }
 
         function recallRecpts() {

@@ -173,25 +173,37 @@
         function replaceId() {
           var r = confirm("Update receipt count ID?");
             if (r == true) {
-                localStorage.recptCount = $('#crypt').val();
-                alert("Set current recptCount to " + $('#crypt').val());
+                replaceIdNoConfirm();
             }
+        }
+
+        function replaceIdNoConfirm() {
+           localStorage.recptCount = $('#crypt').val();
+           alert("Set current recptCount to " + $('#crypt').val());
         }
 
         function replaceRecpts() {
           var r = confirm("Replace receipts local database?");
             if (r == true) {
-                localStorage.recptArr = $('#crypt').val();
-                alert("Replaced the local DB");
+                replaceRecptsNoConfirm();
             }
+        }
+
+        function replaceRecptsNoConfirm() {
+            localStorage.recptArr = $('#crypt').val();
+            alert("Replaced the local DB");
         }
 
         function clearRecpts() {
           var r = confirm("Clear all receipts from local database?");
             if (r == true) {
-                localStorage.clear();
-                alert("Local storage cleared");
+                clearRecptsNoConfirm();
             }
+        }
+
+        function clearRecptsNoConfirm() {
+            localStorage.clear();
+            alert("Local storage cleared");
         }
         
         function jsonpCallback(json) {   
