@@ -318,10 +318,32 @@
         }
     }
 
+    function removeme(i) {
+        if(purchased[i].qty == 1) {
+            purchased.splice(i,1);
+        }
+        else {
+            purchased[i].qty = purchased[i].qty - 1;
+        }
+
+        total = 0;
+        
+        $.each(purchased, function (i, item) {
+            var currAmnt = total * 1;
+            var result = currAmnt + item.amt * item.qty;
+
+            total = result.toFixed(2);
+        });
+        if ($('#btn_tendered').html().indexOf(".") > - 1) {
+            calcChange();
+        }
+        drawReciept();
+    }
+
     function drawReciept() {
         $('#purchasedItemsDiv').html('<ul id="purchasedItems"></ul>');
         $.each(purchased, function (i, item) {
-            $('#purchasedItems').append('<div class="list-group-item"><div class="itemholder"><span class="itemqty">' + item.qty + 'x</span> ' + item.name + ' <div class="itemprice">($' + item.amt + ')</div></div></div>');
+            $('#purchasedItems').append('<div class="list-group-item" onclick="removeme('+i+')"><div class="itemholder"><span class="itemqty">' + item.qty + 'x</span> ' + item.name + ' <div class="itemprice">($' + item.amt + ')</div></div></div>');
         });
 
         $('#btn_total').html('Total: $' + total);
