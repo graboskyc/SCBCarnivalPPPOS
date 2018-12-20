@@ -237,11 +237,14 @@
     var g_menuYear = 0;
     var g_encKey = "";
     var g_json = "";
+    var g_stitchurl="";
+    var o = {}
 
     function jsonpCallback(json) {
         g_menuYear = json.menuyear;
         g_encKey = json.encKey;
         g_json = json;
+        g_stitchurl = json.stitchurl;
 
         var tabsArr = [];
 
@@ -397,7 +400,7 @@
     }
 
     function getEncStr() {
-        var o = {};
+        o = {};
 
         o.Fp = "NoFP";
         o.Rc = "NoRc";
@@ -469,7 +472,15 @@
             }
 
             try {
-                $.post( "save.php", { recid: localStorage.recptCount, register: localStorage.fp, encText: encStr } );
+                o.To = parseFloat(o.To);
+                var data = { recid: localStorage.recptCount, register: localStorage.fp, encText: encStr, recpt:o};
+                $.ajax({
+                    type: "POST",
+                    url: g_stitchurl,
+                    processData: false,
+                    contentType: 'application/json',
+                    data: JSON.stringify(data)
+                });
             } catch(err) {
                 console.log(err);
             }
