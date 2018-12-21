@@ -238,6 +238,7 @@
     var g_encKey = "";
     var g_json = "";
     var g_stitchurl="";
+    var g_station="";
     var o = {}
 
     function jsonpCallback(json) {
@@ -245,6 +246,7 @@
         g_encKey = json.encKey;
         g_json = json;
         g_stitchurl = json.stitchurl;
+        g_station = json.station;
 
         var tabsArr = [];
 
@@ -473,7 +475,7 @@
 
             try {
                 o.To = parseFloat(o.To);
-                var data = { recid: localStorage.recptCount, register: localStorage.fp, encText: encStr, recpt:o};
+                var data = { recid: localStorage.recptCount, register: localStorage.fp, encText: encStr, recpt:o, station:g_station};
                 $.ajax({
                     type: "POST",
                     url: g_stitchurl,

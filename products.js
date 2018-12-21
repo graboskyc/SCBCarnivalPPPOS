@@ -39,6 +39,7 @@ jsonpCallback({"products":[
     "website":"www.scbcarnival.com",
     "eventdate":"June 11-16, 6-11pm nightly",
 	"menuyear":2018,
+	"station":"scbcarnipetesplace",
 	"stitchurl":""
     });
 
