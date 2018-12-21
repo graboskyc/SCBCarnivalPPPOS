@@ -38,7 +38,7 @@ jsonpCallback({"products":[
     "eventname":"St. Charles Carnival",
     "website":"www.scbcarnival.com",
     "eventdate":"June 10-15, 6-11pm nightly",
-	"menuyear":2019,
+	"menuyear":2018,
 	"station":"scbcarnipetesplace",
 	"stitchurl":""
     });
