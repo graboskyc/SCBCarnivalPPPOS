@@ -423,7 +423,7 @@
 
         if (typeof (Storage) !== "undefined") {
             localStorage.recptCount = (localStorage.recptCount * 1) + 1;
-            o.Rc = localStorage.recptCount;
+            o.Rc = localStorage.recptCount * 1;
             o.Fp = localStorage.fp;
         }
 
