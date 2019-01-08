@@ -40,6 +40,6 @@ jsonpCallback({"products":[
     "eventdate":"June 10-15, 6-11pm nightly",
 	"menuyear":2018,
 	"station":"scbcarnipetesplace",
-	"stitchurl":""
+	"stitchposturl":""
     });
 

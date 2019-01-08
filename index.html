@@ -237,56 +237,70 @@
     var g_menuYear = 0;
     var g_encKey = "";
     var g_json = "";
-    var g_stitchurl="";
+    var g_stitchposturl="";
     var g_station="";
     var o = {}
 
     function jsonpCallback(json) {
-        g_menuYear = json.menuyear;
-        g_encKey = json.encKey;
-        g_json = json;
-        g_stitchurl = json.stitchurl;
-        g_station = json.station;
+        if(json.hasOwnProperty("stitchgeturl")) {
+            var stitchgeturl = json.stitchgeturl;
+            var station = json.station;
+            var year = json.menuyear;
+            console.log("Pulling from server");
 
-        var tabsArr = [];
+            $.get(stitchgeturl+"?station="+station+"&year="+year,
+                function(data) {
+                    console.log(data);
+                    jsonpCallback(data);
+                });
+        } else {
+            console.log("GOT JSON");
+            g_menuYear = json.menuyear;
+            g_encKey = json.encKey;
+            g_json = json;
+            g_stitchposturl = json.stitchposturl;
+            g_station = json.station;
 
-        $.each(json.products, function (i, item) {
-            var years = json.products[i].years;
-            if (years.indexOf(g_menuYear) != -1) {
-                
-                var id = json.products[i].id;
-                var name = json.products[i].name;
-                var price = json.products[i].price;
-                var itemType = json.products[i].itemType;
+            var tabsArr = [];
 
-                var tabname = "tab_"+itemType;
-
-                if(tabsArr.indexOf(itemType) == -1) {
-                    console.log("Creating tab");
-                    tabsArr.push(itemType);
-                    var liClass = "";
+            $.each(json.products, function (i, item) {
+                var years = json.products[i].years;
+                if (years.indexOf(g_menuYear) != -1) {
                     
-                    $('#inventorytabsul').append('<li role="presentation" class="'+tabname+'" ><a href="#'+tabname+'" aria-controls="'+tabname+'" role="tab" data-toggle="tab">'+capitalize(itemType)+'</a></li>');
-                    $('#inventory').append('<div role="tabpanel" class="tab-pane fade in" id="'+tabname+'"></div>');
+                    var id = json.products[i].id;
+                    var name = json.products[i].name;
+                    var price = json.products[i].price;
+                    var itemType = json.products[i].itemType;
+
+                    var tabname = "tab_"+itemType;
+
+                    if(tabsArr.indexOf(itemType) == -1) {
+                        console.log("Creating tab");
+                        tabsArr.push(itemType);
+                        var liClass = "";
+                        
+                        $('#inventorytabsul').append('<li role="presentation" class="'+tabname+'" ><a href="#'+tabname+'" aria-controls="'+tabname+'" role="tab" data-toggle="tab">'+capitalize(itemType)+'</a></li>');
+                        $('#inventory').append('<div role="tabpanel" class="tab-pane fade in" id="'+tabname+'"></div>');
+                    }
+                    
+                    var special = "";
+                    if(json.products[i].special) { special = " special"; }
+                    var html = '<div id="div_' + id + '" class="col-xs-6 col-lg-4 items ' + itemType + special +'" data-price="' + price + '" data-name="' + name + '" onclick="addAmount(' + id + ');"><h2>' + name + '</h2><p class="squareprice">' + price + '</p></div>'
+
+                    $('#'+tabname).append(html);
+                    $('#tab_all').append(html);
                 }
-                
-                var special = "";
-                if(json.products[i].special) { special = " special"; }
-                var html = '<div id="div_' + id + '" class="col-xs-6 col-lg-4 items ' + itemType + special +'" data-price="' + price + '" data-name="' + name + '" onclick="addAmount(' + id + ');"><h2>' + name + '</h2><p class="squareprice">' + price + '</p></div>'
+            });
 
-                $('#'+tabname).append(html);
-                $('#tab_all').append(html);
-            }
-        });
+            $('#inventorytabsul').append('<li role="presentation" class="tab_all active" ><a href="#tab_all" aria-controls="tab_all" role="tab" data-toggle="tab">All</a></li>');
 
-        $('#inventorytabsul').append('<li role="presentation" class="tab_all active" ><a href="#tab_all" aria-controls="tab_all" role="tab" data-toggle="tab">All</a></li>');
-
-        $(".sitename").html(json.sitename);
-        $("title").html(json.sitename);
-        $('#eventname').html(json.eventname);
-        $('#website').html(json.website);
-        $('#eventdate').html(json.eventdate);
-        $('#logo').attr('src', 'imgs/logo_' + g_menuYear + ".png");
+            $(".sitename").html(json.sitename);
+            $("title").html(json.sitename);
+            $('#eventname').html(json.eventname);
+            $('#website').html(json.website);
+            $('#eventdate').html(json.eventdate);
+            $('#logo').attr('src', 'imgs/logo_' + g_menuYear + ".png");
+        }
     }
 
     function addAmount(id) {
@@ -478,10 +492,12 @@
                 var data = { recid: localStorage.recptCount, register: localStorage.fp, encText: encStr, recpt:o, station:g_station};
                 $.ajax({
                     type: "POST",
-                    url: g_stitchurl,
+                    url: g_stitchposturl,
                     processData: false,
                     contentType: 'application/json',
                     data: JSON.stringify(data)
+                }).success(function() {
+                    alert("Saved Reciept.")
                 });
             } catch(err) {
                 console.log(err);
@@ -614,7 +630,7 @@
     });
     </script>
 
-    <script src="products.js" type="text/javascript"></script>
+    <script src="products_serverside.js" type="text/javascript"></script>
 </body>
 
 </html>
