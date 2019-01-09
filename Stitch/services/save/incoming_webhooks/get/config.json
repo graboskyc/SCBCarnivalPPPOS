@@ -1,0 +1,11 @@
+{
+    "id": "5c34a71690a60b2e7428c122",
+    "name": "get",
+    "run_as_user_id": "",
+    "run_as_user_id_script_source": "",
+    "options": {
+        "httpMethod": "GET",
+        "validationMethod": "NO_VALIDATION"
+    },
+    "respond_result": true
+}
