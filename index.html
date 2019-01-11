@@ -489,7 +489,7 @@
 
             try {
                 o.To = parseFloat(o.To);
-                var data = { recid: localStorage.recptCount, register: localStorage.fp, encText: encStr, recpt:o, station:g_station};
+                var data = { recid: localStorage.recptCount*1, register: localStorage.fp, encText: encStr, recpt:o, station:g_station, purch: purchased};
                 $.ajax({
                     type: "POST",
                     url: g_stitchposturl,
