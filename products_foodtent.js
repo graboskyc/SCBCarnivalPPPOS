@@ -29,17 +29,24 @@ jsonpCallback({
             "years": [2019]
         },
         {
-            "id": 1005,
-            "name": "Hoagie",
-            "price": "5.00",
-            "itemType": "food",
-            "years": [2019]
-        },
-        {
             "id": 1006,
             "name": "Pork Roll",
             "price": "4.50",
             "itemType": "food",
+            "years": [2019]
+        },
+        {
+            "id": 1005,
+            "name": "Hoagie",
+            "price": "5.00",
+            "itemType": "foodcold",
+            "years": [2019]
+        },
+        {
+            "id": 1009,
+            "name": "Water melon",
+            "price": "5.00",
+            "itemType": "foodcold",
             "years": [2019]
         },
         {
