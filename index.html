@@ -272,7 +272,7 @@
             if(Array.isArray(json.station)) {
                 g_json = json;
                 $.each(json.station, function(index, value) {
-                    var button = '<button class="btn btn-default btn-lg" data-station="'+value+'" onclick="madeStationChoice(this)">'+value+'</button>&nbsp;';
+                    var button = '<button class="btn btn-default btn-lg" data-station="'+value+'" onclick="madeStationChoice(this)" style="height:150px;padding:25px;margin:15px;">'+value+'</button>&nbsp;';
                     $('#choicemodalbody').append(button);
                 });
                 $('#choicemodal').modal('show');
