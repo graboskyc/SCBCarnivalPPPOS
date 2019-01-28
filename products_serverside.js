@@ -1,6 +1,6 @@
 jsonpCallback({
-	"menuyear":2018,
-	"station":"scbcarnipetesplace",
+	"menuyear":2019,
+	"station":["scbcarnipetesplace","scbcarnifoodtent"],
 	"stitchgeturl":""
     });
 
