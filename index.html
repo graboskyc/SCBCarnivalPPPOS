@@ -176,7 +176,7 @@
         <footer class="hidden-print">
             <hr>
             <p class="sitename" style="float:left;"></p>
-            <p style="float:right;"><a href="#myModal" data-toggle="modal" data-target="#myModal">Reprint</a> | <a href="history.html">History</a> | <a href="inventory.html">Inventory</a> | <a href="admin.html">Admin</a> | Clear On Save <input type="checkbox" id="chk_autoclear" checked /></p>
+            <p style="float:right;"><a href="#myModal" data-toggle="modal" data-target="#myModal">Reprint</a> | <a href="history.html" class='footernavmenu'>History</a> | <a href="inventory.html" class='footernavmenu'>Inventory</a> | <a href="admin.html" class='footernavmenu'>Admin</a> | Clear On Save <input type="checkbox" id="chk_autoclear" checked /></p>
         </footer>
 
         <div class="visible-print" style="position:absolute;bottom:60px;width:100%;text-align:center;">
@@ -269,6 +269,9 @@
         window.history.pushState({},"POS System "+s,"index.html#!"+s);
         window.location = "index.html#!"+s;
         $('#choicemodal').modal('hide');
+        $('.footernavmenu').each(function() {
+            $(this).attr("href", $(this).attr("href")+'#!'+s);
+        });
         jsonpCallback(json);
     }
 

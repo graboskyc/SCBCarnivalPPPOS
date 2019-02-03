@@ -74,7 +74,7 @@
       <footer class="hidden-print">
         <hr>
         <p class="sitename" style="float:left;"></p>
-        <p style="float:right;"><a href="index.html">Register</a> | <a href="inventory.html">Inventory</a> | <a href="admin.html">Admin</a></p>
+        <p style="float:right;"><a href="index.html" class="footernavmenu">Register</a> | <a href="inventory.html" class="footernavmenu">Inventory</a> | <a href="admin.html" class="footernavmenu">Admin</a></p>
       </footer>
 
       <div class="modal fade hidden-print" id="choicemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -115,10 +115,16 @@
       var g_json = "";
       var g_encKey = "";
 
-      function madeStationChoice(e) {
+      function madeStationChoice(s) {
+        console.log('Using station: '+s);
         json = g_json;
-        json.station = $(e).attr("data-station");
+        json.station = s;
+        window.history.pushState({},"POS System "+s,"history.html#!"+s);
+        window.location = "history.html#!"+s;
         $('#choicemodal').modal('hide');
+        $('.footernavmenu').each(function() {
+            $(this).attr("href", $(this).attr("href")+'#!'+s);
+        });
         jsonpCallback(json);
       }
 
@@ -201,11 +207,18 @@
           if(json.hasOwnProperty("stitchgeturl")) {
             if(Array.isArray(json.station)) {
                 g_json = json;
-                $.each(json.station, function(index, value) {
-                    var button = '<button class="btn btn-default btn-lg" data-station="'+value+'" onclick="madeStationChoice(this)" style="height:150px;padding:25px;margin:15px;">'+value+'</button>&nbsp;';
-                    $('#choicemodalbody').append(button);
-                });
-                $('#choicemodal').modal('show');
+                var url = window.self.location.href;
+                var kvp = url.split("#!");
+                if(kvp.length > 1) {
+                    console.log('URL override of station');
+                    madeStationChoice(kvp[1]);
+                } else {
+                  $.each(json.station, function(index, value) {
+                      var button = '<button class="btn btn-default btn-lg" onclick="madeStationChoice(\''+value+'\')" style="height:150px;padding:25px;margin:15px;">'+value+'</button>&nbsp;';
+                      $('#choicemodalbody').append(button);
+                  });
+                  $('#choicemodal').modal('show');
+                }
             } else {
                 var stitchgeturl = json.stitchgeturl;
                 var station = json.station;
