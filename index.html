@@ -176,7 +176,7 @@
         <footer class="hidden-print">
             <hr>
             <p class="sitename" style="float:left;"></p>
-            <p style="float:right;"><a href="#myModal" data-toggle="modal" data-target="#myModal">Reprint</a> | <a href="history.html" class='footernavmenu'>History</a> | <a href="inventory.html" class='footernavmenu'>Inventory</a> | <a href="admin.html" class='footernavmenu'>Admin</a> | Clear On Save <input type="checkbox" id="chk_autoclear" checked /></p>
+            <p style="float:right;"><a href="#myModal" data-toggle="modal" data-target="#myModal" class="hidden-xs">Reprint</a> | <a href="history.html" class='footernavmenu'>History</a> | <a href="inventory.html" class='footernavmenu'>Inventory</a> | <a href="admin.html" class='footernavmenu'>Admin</a> | Clear On Save <input type="checkbox" id="chk_autoclear" checked /></p>
         </footer>
 
         <div class="visible-print" style="position:absolute;bottom:60px;width:100%;text-align:center;">
@@ -542,7 +542,12 @@
 
             try {
                 o.To = parseFloat(o.To);
-                var data = { recid: localStorage.recptCount*1, register: localStorage.fp, encText: encStr, recpt:o, station:g_station, purch: purchased};
+                var isMobile = false;
+                if($('#btn_tendered').is(":hidden")) {
+                    // this is a mobile phone so no total calculations
+                    isMobile = true;
+                }
+                var data = { recid: localStorage.recptCount*1, register: localStorage.fp, encText: encStr, recpt:o, station:g_station, purch: purchased, mobile:isMobile};
                 $.ajax({
                     type: "POST",
                     url: g_stitchposturl,
