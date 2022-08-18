@@ -434,7 +434,7 @@
         $('#telNumber').val('');
 
         setTime();
-        $('#bc').html(" ");
+        //$('#bc').html(" ");
 
         return false;
     }
@@ -511,7 +511,7 @@
         var canvas = document.createElement('canvas');
         canvas.width = bw * barcode['num_cols'];
         canvas.height = bh * barcode['num_rows'];
-        container.appendChild(canvas);
+        //container.appendChild(canvas);
         var ctx = canvas.getContext('2d');
         // graph barcode elements
         var y = 0;
@@ -527,6 +527,10 @@
             }
             y += bh;
         }
+        var dataURL = canvas.toDataURL();
+        var bcImg = document.createElement("img");
+        bcImg.src = dataURL;
+        container.appendChild(bcImg);
     }
 
     function writeRecptStorage(encStr) {
@@ -614,6 +618,8 @@
             }
         });
 
+        genBarCode(ra[encIndex]);
+
         if (encIndex > -1) {
             genBarCode(ra[encIndex]);
             setTimeout(function(){ window.print(); }, 500); // take a sec to load new graphics
@@ -688,6 +694,7 @@
                 clearAmount();
             }
         });
+
     });
     </script>
 
